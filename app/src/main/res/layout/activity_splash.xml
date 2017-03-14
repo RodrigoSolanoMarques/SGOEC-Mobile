@@ -1,0 +1,62 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    tools:context="tcc.utfpr.edu.br.soec.activity.SplashActivity">
+
+    <LinearLayout
+        android:id="@+id/activity_splash_ln_soec"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <!-- The primary full-screen view. This can be replaced with whatever view
+         is needed to present your content, e.g. VideoView, SurfaceView,
+         TextureView, etc. -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:keepScreenOn="true"
+            android:text="@string/soec_mobile"
+            android:textColor="#f6fafd"
+            android:textSize="50sp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="26dp"
+            android:layout_marginRight="26dp"
+            android:background="#f6fafd"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:gravity="center"
+            android:keepScreenOn="true"
+            android:text="@string/sistema_oportunidade_emprego_curriculo"
+            android:textColor="#f6fafd"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/activity_splash_mensagem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:paddingBottom="16dp"
+        android:layout_gravity="bottom|center"
+        android:textAlignment="center"
+        android:keepScreenOn="true"
+        android:textColor="#f6fafd"
+        android:textSize="16sp" />
+
+</FrameLayout>

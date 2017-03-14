@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_curriculo"
+            android:icon="@android:drawable/ic_input_get"
+            android:title="@string/curriculos" />
+
+        <item
+            android:id="@+id/nav_formacoes"
+            android:icon="@android:drawable/ic_input_get"
+            android:title="@string/formacoes" />
+
+        <item
+            android:id="@+id/nav_cursos_complementares"
+            android:icon="@android:drawable/ic_input_get"
+            android:title="@string/cursos_complementares" />
+
+        <item
+            android:id="@+id/nav_experiencias_profissionais"
+            android:icon="@android:drawable/ic_input_get"
+            android:title="@string/experiencias_profissionais" />
+    </group>
+
+    <group android:checkableBehavior="single">
+    <item android:title="@string/favoritos">
+        <menu>
+            <item
+                android:id="@+id/nav_empresas"
+                android:icon="@android:drawable/ic_menu_search"
+                android:title="@string/empresas" />
+            <item
+                android:id="@+id/nav_oportunidade_emprego"
+                android:icon="@android:drawable/ic_menu_search"
+                android:title="@string/oportunidade_emprego" />
+        </menu>
+    </item>
+    </group>
+
+</menu>

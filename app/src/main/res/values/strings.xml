@@ -1,0 +1,90 @@
+<resources>
+    <string name="app_name">Soec</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password (optional)</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="title_activity_main">Main Activity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+
+    <string name="soec">SOEC</string>
+    <string name="soec_mobile">SOEC Mobile</string>
+    <string name="sistema_oportunidade_emprego_curriculo">Sistema de oportunidade de Emprego e Currículo</string>
+    <string name="sistema_oportunidade_emprego_curriculo_mobile">Sistema de oportunidade de Emprego e Currículo - Mobile</string>
+
+    <string name="atualizar">Atualizar</string>
+    <string name="cadastrar">Cadastrar</string>
+    <string name="cadastrar_me">Cadastrar-me</string>
+    <string name="cursos_complementares">Cursos Complementares</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="nome">Nome</string>
+    <string name="username">User Name</string>
+    <string name="nome_usuario">Nome de Usuário</string>
+    <string name="sobrenome">Sobrenome</string>
+    <string name="foto">Foto</string>
+    <string name="formacao">Formação</string>
+    <string name="formacoes">Formações</string>
+    <string name="email">E-mail</string>
+    <string name="experiencias_profissionais">Experiências Profissionais</string>
+    <string name="pesquisar">Persquisar</string>
+    <string name="sair">Sair</string>
+    <string name="sobre">Sobre</string>
+    <string name="senha">Senha</string>
+    <string name="senha_novamente">Senha Novamente</string>
+    <string name="data_nascimento">Data de Nascimento</string>
+    <string name="digite_aqui_seu_user_name">Digite aqui seu User Name</string>
+    <string name="digite_aqui_seu_nome">Digite aqui seu nome</string>
+    <string name="digite_aqui_seu_sobrenome">Digite aqui seu sobrenome</string>
+    <string name="digite_aqui_seu_email">Digite aqui seu e-mail</string>
+    <string name="digite_aqui_sua_senha">Digite aqui sua senha</string>
+    <string name="digite_novamente_senha">Digite novamente a sua senha</string>
+    <string name="lembre_me">Lembre-me</string>
+
+    <!-- Formulario-->
+    <string name="nome_dois_pontos">Nome:</string>
+    <string name="sobrenome_dois_pontos">Sobrenome:</string>
+    <string name="data_nascimento_dois_pontos">Data de nascimento:</string>
+    <string name="email_dois_pontos">E-mail:</string>
+
+    <!-- Menus -->
+    <string name="curriculos">Currículos</string>
+    <string name="oportunidade_emprego">Oportunidade de Emprego</string>
+    <string name="empresas">Empresas</string>
+    <string name="novo">Novo</string>
+    <string name="alterar">Alterar</string>
+    <string name="excluir">Excluir</string>
+    <string name="enviar">Enviar</string>
+    <string name="favoritos">Favoritos</string>
+
+    <string name="title_activity_splash">SplashActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+
+    <string name="conta_usuario_criada_com_sucesso">Conta de usuário criado com sucesso.</string>
+
+    <string name="senhas_diferentes">Senhas diferentes.</string>
+
+    <!--Erros-->
+    <string name="erro_criar_conta_usuario">Erro ao criar a conta de usuário.</string>
+    <string name="title_activity_formacoes">Formacoes</string>
+
+
+</resources><!--<resources>--><!--<string name="app_name">Soec</string>-->
+
+    <!--&lt;!&ndash; Strings related to login &ndash;&gt;--><!--<string name="email">Email</string>--><!--<string name="senha">Senha</string>--><!--<string name="error_email_invalida">Este email é invalido</string>--><!--<string name="error_senha_invalida">Esta senha é muito curta</string>--><!--<string name="error_senha_incorreta">Esta senha está incorreta</string>--><!--<string name="error_compo_obrigatorio">Este campo é obrigatório</string>--><!--</resources>-->
+

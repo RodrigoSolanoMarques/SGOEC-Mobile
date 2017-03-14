@@ -1,0 +1,7 @@
+<resources>
+
+    <style name="ListViewStyle" parent="@android:style/Widget.Material.ListView">
+        <item name="android:background">@color/white</item>
+        <item name="android:divider">@color/gray_d9</item>
+    </style>
+</resources>
