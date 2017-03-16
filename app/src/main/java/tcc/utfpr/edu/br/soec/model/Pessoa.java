@@ -25,7 +25,7 @@ public class Pessoa {
 
     @ForeignKey(joinEntity = Cidade.class, joinPrimaryKey = "_id")
     @Column
-    private Cidade idCidade;
+    private Long idCidade;
 
     @Column
     private String nome;
@@ -72,7 +72,6 @@ public class Pessoa {
     /* Relacionamento */
 
     @RelationClass(relationType= RelationType.OneToMany, joinColumn="idCidade")
-    @Column
     private Cidade cidade;
 
     public Pessoa() {
@@ -214,11 +213,11 @@ public class Pessoa {
         this.foto = foto;
     }
 
-    public Cidade getIdCidade() {
+    public Long getIdCidade() {
         return idCidade;
     }
 
-    public void setIdCidade(Cidade idCidade) {
+    public void setIdCidade(Long idCidade) {
         this.idCidade = idCidade;
     }
 }

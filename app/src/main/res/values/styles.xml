@@ -34,6 +34,12 @@
         <item name="android:background">@color/black_overlay</item>
     </style>
 
+    <!-- Login -->
+    <style name="LoginTheme" parent="AppTheme">
+        <item name="android:textColorPrimary">@color/colorAccent</item>
+        <item name="android:textColorSecondary">@color/lightPrimaryColor</item>
+    </style>
+
     <style name="ListViewStyle" parent="@android:style/Widget.ListView">
         <item name="android:background">@color/white</item>
         <item name="android:divider">@color/gray_d9</item>

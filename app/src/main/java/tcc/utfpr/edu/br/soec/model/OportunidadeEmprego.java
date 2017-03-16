@@ -1,11 +1,13 @@
 package tcc.utfpr.edu.br.soec.model;
 
 import br.com.rafael.jpdroid.annotations.Column;
+import br.com.rafael.jpdroid.annotations.Entity;
 import br.com.rafael.jpdroid.annotations.ForeignKey;
 import br.com.rafael.jpdroid.annotations.PrimaryKey;
 import br.com.rafael.jpdroid.annotations.RelationClass;
 import br.com.rafael.jpdroid.enums.RelationType;
 
+@Entity
 public class OportunidadeEmprego {
 
 	@PrimaryKey

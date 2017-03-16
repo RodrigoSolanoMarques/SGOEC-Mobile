@@ -4,19 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <ListView
         android:id="@+id/fragment_listar_formacoes_lista"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:dividerHeight="1dp"
-       >
-    </ListView>
+        android:dividerHeight="1dp" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fragment_listar_formacoes_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
+        android:tint="@color/colorPrimary"
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@android:drawable/ic_input_add" />
 

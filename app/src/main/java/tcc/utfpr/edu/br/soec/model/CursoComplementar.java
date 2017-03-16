@@ -11,7 +11,7 @@ public class CursoComplementar {
 
 	@PrimaryKey
 	@Column
-	private Integer _id;
+	private Long _id;
 
 	@Column
 	private Long id;
@@ -34,11 +34,11 @@ public class CursoComplementar {
 	public CursoComplementar() {
 	}
 
-	public Integer get_id() {
+	public Long get_id() {
 		return _id;
 	}
 
-	public void set_id(Integer _id) {
+	public void set_id(Long _id) {
 		this._id = _id;
 	}
 
