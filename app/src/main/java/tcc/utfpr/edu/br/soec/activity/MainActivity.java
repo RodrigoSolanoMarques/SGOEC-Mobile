@@ -1,5 +1,6 @@
 package tcc.utfpr.edu.br.soec.activity;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         dataBase = Jpdroid.getInstance();
         dataBase.setContext(context);
         dataBase.open();
+
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction tx = fragmentManager.beginTransaction();

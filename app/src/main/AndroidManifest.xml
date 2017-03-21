@@ -33,7 +33,9 @@
             android:name=".activity.MainActivity"
             android:label="@string/soec_mobile"
             android:theme="@style/AppTheme" />
-        <activity android:name=".activity.ContaUsuarioActivity" />
+        <activity
+            android:name=".activity.ContaUsuarioActivity"
+            android:theme="@style/LoginTheme" />
         <activity
             android:name=".activity.SplashActivity"
             android:label="@string/title_activity_splash"
