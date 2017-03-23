@@ -17,6 +17,9 @@ public class CursoComplementar {
 	private Long id;
 
 	@Column
+	private Integer periodo;
+
+	@Column
 	private String nomeCurso;
 
 	@Column
@@ -88,5 +91,13 @@ public class CursoComplementar {
 
 	public void setDataFinal(Date dataFinal) {
 		this.dataFinal = dataFinal;
+	}
+
+	public Integer getPeriodo() {
+		return periodo;
+	}
+
+	public void setPeriodo(Integer periodo) {
+		this.periodo = periodo;
 	}
 }

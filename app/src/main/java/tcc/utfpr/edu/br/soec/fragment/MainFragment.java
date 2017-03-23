@@ -99,13 +99,13 @@ public class MainFragment extends Fragment
 
         if (id == R.id.nav_curriculo) {
             toolbar.setTitle("Cadastro de Currículo");
-            getFragmentManager().beginTransaction().replace(R.id.content_main_framelayout, new CadastrarCurriculoFragment()).commit();
+            getFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content_main_framelayout, new CadastrarCurriculoFragment()).commit();
         }else if (id == R.id.nav_formacoes) {
-            getFragmentManager().beginTransaction().replace(R.id.content_main_framelayout, new ListarFormacoesFragmet()).commit();
+            getFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content_main_framelayout, new ListarFormacoesFragment()).commit();
         } else if (id == R.id.nav_cursos_complementares) {
-            getFragmentManager().beginTransaction().replace(R.id.content_main_framelayout, new CadastrarCursoComplementarFragment()).commit();
+            getFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content_main_framelayout, new ListarCursosComplementaresFragment()).commit();
         } else if (id == R.id.nav_experiencias_profissionais) {
-            getFragmentManager().beginTransaction().replace(R.id.content_main_framelayout, new CadastrarExperienciaProfissionalFragment()).commit();
+            getFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content_main_framelayout, new CadastrarExperienciaProfissionalFragment()).commit();
         }
         else if (id == R.id.nav_empresas) {
             Intent intent = new Intent(context, EmpresasFavoritasActivity.class);
@@ -117,13 +117,6 @@ public class MainFragment extends Fragment
         DrawerLayout drawer = (DrawerLayout) layout.findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        outState.putString("titulo", "Curriculo2");
-
-        super.onSaveInstanceState(outState);
     }
 
 }

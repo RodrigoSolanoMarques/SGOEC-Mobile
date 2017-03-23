@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
         dataBase.setContext(context);
         dataBase.open();
 
-
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction tx = fragmentManager.beginTransaction();
         tx.replace(R.id.activity_main_framelayout, new MainFragment());
@@ -52,10 +51,6 @@ public class MainActivity extends AppCompatActivity {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
-
         }
     }
-
-
-
 }

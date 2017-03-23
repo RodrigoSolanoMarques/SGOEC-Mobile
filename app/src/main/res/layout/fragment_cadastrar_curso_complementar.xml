@@ -15,9 +15,9 @@
 
             <EditText
                 android:id="@+id/fragment_curso_complementar_nome_curso"
+                style="@style/StyleEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/StyleEditText"
                 android:hint="Nome do Curso" />
 
         </android.support.design.widget.TextInputLayout>
@@ -33,10 +33,10 @@
 
             <EditText
                 android:id="@+id/fragment_curso_complementar_instituicao"
+                style="@style/StyleEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Instituição"
-                style="@style/StyleEditText" />
+                android:hint="Instituição" />
 
         </android.support.design.widget.TextInputLayout>
     </TableRow>
@@ -68,14 +68,34 @@
 
                 <EditText
                     android:id="@+id/fragment_curso_complementar_data_inicial"
+                    style="@style/StyleEditTextDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Data Inicial"
-                    style="@style/StyleEditTextDate" />
+                    android:hint="Data Inicial" />
 
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
+                android:id="@+id/fragment_curso_complementar_text_input_layout_data_final"
+                style="@style/StyleTextInputLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="3dp"
+                android:visibility="gone">
+
+                <EditText
+                    android:id="@+id/fragment_curso_complementar_data_final"
+                    style="@style/StyleEditTextDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Data Final"
+                    />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/fragment_curso_complementar_text_input_layout_periodo"
                 style="@style/StyleTextInputLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -83,13 +103,14 @@
                 android:paddingLeft="3dp">
 
                 <EditText
-                    android:id="@+id/fragment_curso_complementar_data_final"
+                    android:id="@+id/fragment_curso_complementar_periodo"
+                    style="@style/StyleEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/StyleEditTextDate"
-                    android:hint="Data Final"
-                    android:visibility="gone"
-                     />
+                    android:hint="Período"
+                    android:inputType="number"
+                    android:maxLength="2"
+                    />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -109,12 +130,14 @@
             android:paddingTop="30dp">
 
             <Button
+                android:id="@+id/fragment_curso_complementar_btnSalvar"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Salvar" />
 
             <Button
+                android:id="@+id/fragment_curso_complementar_btnCancelar"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

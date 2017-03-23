@@ -17,6 +17,9 @@ public class Formacao {
 	private Long id;
 
 	@Column
+	private Integer periodo;
+
+	@Column
 	private String nomeCurso;
 
 	@Column
@@ -88,6 +91,14 @@ public class Formacao {
 
 	public void setDataFinal(Date dataFinal) {
 		this.dataFinal = dataFinal;
+	}
+
+	public Integer getPeriodo() {
+		return periodo;
+	}
+
+	public void setPeriodo(Integer periodo) {
+		this.periodo = periodo;
 	}
 
 	@Override

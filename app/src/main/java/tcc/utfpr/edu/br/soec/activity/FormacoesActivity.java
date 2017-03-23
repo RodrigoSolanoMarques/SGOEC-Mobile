@@ -1,18 +1,12 @@
 package tcc.utfpr.edu.br.soec.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import tcc.utfpr.edu.br.soec.R;
-import tcc.utfpr.edu.br.soec.fragment.ListarFormacoesFragmet;
+import tcc.utfpr.edu.br.soec.fragment.ListarFormacoesFragment;
 
 public class FormacoesActivity extends AppCompatActivity {
 
@@ -23,7 +17,7 @@ public class FormacoesActivity extends AppCompatActivity {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction tx = fragmentManager.beginTransaction();
-        tx.replace(R.id.activity_formacoes_framelayout, new ListarFormacoesFragmet());
+        tx.replace(R.id.activity_formacoes_framelayout, new ListarFormacoesFragment());
         tx.commit();
     }
 

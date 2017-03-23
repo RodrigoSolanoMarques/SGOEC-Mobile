@@ -31,6 +31,7 @@
     <string name="cadastrar_me">Cadastrar-me</string>
     <string name="cursos_complementares">Cursos Complementares</string>
     <string name="cancelar">Cancelar</string>
+    <string name="instituicao">Instituição</string>
     <string name="nome">Nome</string>
     <string name="username">User Name</string>
     <string name="nome_usuario">Nome de Usuário</string>
@@ -59,6 +60,7 @@
     <string name="sobrenome_dois_pontos">Sobrenome:</string>
     <string name="data_nascimento_dois_pontos">Data de nascimento:</string>
     <string name="email_dois_pontos">E-mail:</string>
+    <string name="curso_dois_pontos">Curso:</string>
 
     <!-- Menus -->
     <string name="curriculos">Currículos</string>
@@ -82,6 +84,15 @@
     <!--Erros-->
     <string name="erro_criar_conta_usuario">Erro ao criar a conta de usuário.</string>
     <string name="title_activity_formacoes">Formacoes</string>
+
+    <!-- Validações -->
+    <string name="campo_obrigatório">Campo Obrigatório.</string>
+    <string name="registro_salvado_com_sucesso">Registro Salvado Com Sucesso.</string>
+    <string name="bundle_cadastrar_curso_complementar_fragment">bundleCadastrarCursoComplementarFragment</string>
+
+    <!-- Bundle -->
+
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
