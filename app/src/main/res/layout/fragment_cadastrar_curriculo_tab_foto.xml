@@ -1,0 +1,54 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="bottom"
+    android:orientation="vertical"
+    tools:context="tcc.utfpr.edu.br.soec.fragment.CadastrarCurriculoTabFotoFragment">
+
+    <ImageView
+        android:id="@+id/fragment_cadastrar_curriculo_tab_foto_ivFoto"
+        android:layout_width="300dp"
+        android:layout_height="400dp"
+        android:layout_gravity="center|"
+        android:adjustViewBounds="true"
+        android:src="@android:mipmap/sym_def_app_icon"
+        android:text="@string/foto"
+
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/fragment_cadastrar_curriculo_tab_foto_btnCamera"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/ic_menu_camera"
+            android:text="@string/camera" />
+
+        <Button
+            android:id="@+id/fragment_cadastrar_curriculo_tab_foto_btnGaleria"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/ic_menu_gallery"
+            android:text="@string/galeria" />
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/fragment_cadastrar_curriculo_tab_foto_btnSalvar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/colorPrimary"
+        android:drawableRight="@drawable/ic_arrow_forward_white_24dp"
+        android:paddingRight="16dp"
+        android:text="@string/salvar"
+        android:textColor="@color/colorAccent" />
+
+</LinearLayout>

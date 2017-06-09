@@ -50,7 +50,6 @@ public class ContaUsuarioActivity extends AppCompatActivity {
 
     }
 
-
     public void activityContaUsuarioCadastrarOnClick(View view){
         /*
         * Salva conta de usuário no banco
@@ -91,12 +90,12 @@ public class ContaUsuarioActivity extends AppCompatActivity {
              * Indica que uma conta já foi criada.
              * Prefs.CONTAUSUARIO = true
              */
-            Prefs.setBoolean(context, Prefs.CONTAUSUARIOCRIADA, true);
+            Prefs.setBoolean(context, Prefs.CONTA_USUARIO_CRIADA, true);
 
             /*
             * Chama a tela de login
             * */
-            Intent intent = new Intent(ContaUsuarioActivity.this, LoginActivity.class);
+            Intent intent = new Intent(ContaUsuarioActivity.this, MainActivity.class);
             startActivity(intent);
 
             /**
@@ -108,7 +107,6 @@ public class ContaUsuarioActivity extends AppCompatActivity {
             Cursor cursor = dataBase.createQuery(ContaUsuario.class);
             if(cursor.moveToFirst()){
                 ToastUtils.setMsgShort(context, cursor.getString(cursor.getColumnIndex("username")));
-
             }
 
 
@@ -128,7 +126,5 @@ public class ContaUsuarioActivity extends AppCompatActivity {
     public void activityContaUsuarioCancelarOnClick(View view){
         onBackPressed();
     }
-
-
 
 }

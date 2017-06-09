@@ -1,10 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_curriculo_framelayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="tcc.utfpr.edu.br.soec.activity.CurriculoActivity">
+    android:orientation="vertical"
+    tools:context="tcc.utfpr.edu.br.soec.fragment.CadastrarDadosPessoaisFragment">
 
 
-</FrameLayout>
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/activity_curriculo_appbarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:elevation="0dp">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/activity_curriculo_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            app:layout_scrollFlags="scroll|enterAlways" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/activity_curriculo_tb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/activity_curriculo_vp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@android:color/white" />
+
+</LinearLayout>
+
+

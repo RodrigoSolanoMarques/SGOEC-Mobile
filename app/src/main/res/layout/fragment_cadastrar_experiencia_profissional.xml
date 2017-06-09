@@ -1,14 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:background="@color/white"
+android:stretchColumns="0">
 
-    <EditText
+<TableRow android:layout_width="wrap_content">
+
+    <android.support.design.widget.TextInputLayout
+        style="@style/StyleTextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/fragment_experiencia_profissional_nome_empresa"
+            style="@style/StyleEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nome da Empresa" />
+
+    </android.support.design.widget.TextInputLayout>
+
+</TableRow>
+
+<TableRow>
+
+    <android.support.design.widget.TextInputLayout
+        style="@style/StyleTextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/fragment_experiencia_profissional_cargo"
+            style="@style/StyleEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Cargo" />
+
+    </android.support.design.widget.TextInputLayout>
+</TableRow>
+
+<TableRow>
+
+    <CheckBox
+        android:id="@+id/fragment_experiencia_profissional_isAtual"
+        style="@style/StyleCheckBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:gravity="center"
-        android:text="Experiencia Profissional" />
+        android:text="Atual?" />
 
-</LinearLayout>
+</TableRow>
+
+<TableRow>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <android.support.design.widget.TextInputLayout
+            style="@style/StyleTextInputLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingRight="3dp">
+
+            <EditText
+                android:id="@+id/fragment_experiencia_profissional_data_inicial"
+                style="@style/StyleEditTextDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Data Inicial" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/fragment_experiencia_profissional_text_input_layout_data_final"
+            style="@style/StyleTextInputLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="3dp">
+
+            <EditText
+                android:id="@+id/fragment_experiencia_profissional_data_final"
+                style="@style/StyleEditTextDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Data Final" />
+
+        </android.support.design.widget.TextInputLayout>
+
+    </LinearLayout>
+
+</TableRow>
+
+<TableRow>
+
+    <EditText
+        android:id="@+id/fragment_experiencia_profissional_atividades"
+        style="@style/StyleCheckBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lines="5"
+        android:gravity="top"
+        android:inputType="textMultiLine"
+        android:text="Atividades" />
+
+</TableRow>
+
+<TableRow>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="30dp">
+
+        <Button
+            android:id="@+id/fragment_experiencia_profissional_btnSalvar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Salvar" />
+
+        <Button
+            android:id="@+id/fragment_experiencia_profissional_btnCancelar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Cancelar" />
+
+    </LinearLayout>
+</TableRow>
+
+
+</TableLayout>

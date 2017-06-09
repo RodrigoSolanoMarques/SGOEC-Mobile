@@ -1,5 +1,6 @@
 package tcc.utfpr.edu.br.soec.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import br.com.rafael.jpdroid.annotations.Column;
@@ -14,7 +15,7 @@ import br.com.rafael.jpdroid.enums.RelationType;
  */
 
 @Entity
-public class Pessoa {
+public class Pessoa implements Serializable {
 
     @PrimaryKey
     @Column

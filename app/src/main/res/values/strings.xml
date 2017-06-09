@@ -4,12 +4,9 @@
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>
-    <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
-    <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
-    <string name="error_field_required">This field is required</string>
+
+
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
@@ -27,10 +24,22 @@
     <string name="sistema_oportunidade_emprego_curriculo_mobile">Sistema de oportunidade de Emprego e Currículo - Mobile</string>
 
     <string name="atualizar">Atualizar</string>
+    <string name="bairro">Bairro</string>
     <string name="cadastrar">Cadastrar</string>
     <string name="cadastrar_me">Cadastrar-me</string>
+    <string name="cadastro_concluido">Cadastro Concluído</string>
+    <string name="cadastro_salvo_com_sucesso">Cadastro Salvo Com Sucesso</string>
+    <string name="candidato">Candidato</string>
+    <string name="camera">Câmera</string>
+    <string name="celular2">Celular 2</string>
+    <string name="celular1">Celular 1</string>
+    <string name="cidade">Cidade</string>
+    <string name="complemento">Complemento</string>
     <string name="cursos_complementares">Cursos Complementares</string>
+    <string name="curso_complementar">Curso Complementar</string>
     <string name="cancelar">Cancelar</string>
+    <string name="cpf">CPF</string>
+    <string name="dados_pessoais">Dados Pessoais</string>
     <string name="instituicao">Instituição</string>
     <string name="nome">Nome</string>
     <string name="username">User Name</string>
@@ -39,13 +48,19 @@
     <string name="foto">Foto</string>
     <string name="formacao">Formação</string>
     <string name="formacoes">Formações</string>
+    <string name="galeria">Galeria</string>
     <string name="email">E-mail</string>
+    <string name="entrar">Entrar</string>
     <string name="experiencias_profissionais">Experiências Profissionais</string>
+    <string name="exp_profissional">Exp. Profissional</string>
     <string name="pesquisar">Persquisar</string>
+    <string name="proximo">Próximo</string>
     <string name="sair">Sair</string>
+    <string name="salvar">Salvar</string>
     <string name="sobre">Sobre</string>
     <string name="senha">Senha</string>
     <string name="senha_novamente">Senha Novamente</string>
+    <string name="titulacao">Titulação</string>
     <string name="data_nascimento">Data de Nascimento</string>
     <string name="digite_aqui_seu_user_name">Digite aqui seu User Name</string>
     <string name="digite_aqui_seu_nome">Digite aqui seu nome</string>
@@ -54,6 +69,11 @@
     <string name="digite_aqui_sua_senha">Digite aqui sua senha</string>
     <string name="digite_novamente_senha">Digite novamente a sua senha</string>
     <string name="lembre_me">Lembre-me</string>
+    <string name="nº">Nº</string>
+    <string name="rua">Rua</string>
+    <string name="telefone1">Telefone 1</string>
+    <string name="telefone2">Telefone 2</string>
+
 
     <!-- Formulario-->
     <string name="nome_dois_pontos">Nome:</string>
@@ -71,6 +91,9 @@
     <string name="excluir">Excluir</string>
     <string name="enviar">Enviar</string>
     <string name="favoritos">Favoritos</string>
+    <string name="buscar">Buscar</string>
+    <string name="buscar_por">Buscar por</string>
+    <string name="area_profissional">Área Profissional</string>
 
     <string name="title_activity_splash">SplashActivity</string>
     <string name="dummy_button">Dummy Button</string>
@@ -83,15 +106,20 @@
 
     <!--Erros-->
     <string name="erro_criar_conta_usuario">Erro ao criar a conta de usuário.</string>
-    <string name="title_activity_formacoes">Formacoes</string>
+    <string name="title_activity_formacoes">Formações</string>
+    <string name="erro_senha_invalida">Esta senha é muito curta</string>
+    <string name="erro_nome_usuario_invalido">Este nome de usuário é invalido</string>
+    <string name="erro_nome_usuario_incorreto">Nome de usuário incorreto</string>
+    <string name="erro_senha_incorreta">Esta senha está incorreta</string>
+    <string name="error_campo_obrigatorio">Este campo é obrigatório</string>
+    <string name="error_salvar">Não foi possível salvar</string>
 
     <!-- Validações -->
-    <string name="campo_obrigatório">Campo Obrigatório.</string>
+    <string name="campo_obrigatorio">Campo Obrigatório.</string>
     <string name="registro_salvado_com_sucesso">Registro Salvado Com Sucesso.</string>
     <string name="bundle_cadastrar_curso_complementar_fragment">bundleCadastrarCursoComplementarFragment</string>
 
     <!-- Bundle -->
-
 
 
     <!-- TODO: Remove or change this placeholder text -->

@@ -1,5 +1,6 @@
 package tcc.utfpr.edu.br.soec.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import br.com.rafael.jpdroid.annotations.Column;
@@ -7,11 +8,11 @@ import br.com.rafael.jpdroid.annotations.Entity;
 import br.com.rafael.jpdroid.annotations.PrimaryKey;
 
 @Entity
-public class CursoComplementar {
+public class CursoComplementar  implements Serializable{
 
 	@PrimaryKey
 	@Column
-	private Long _id;
+	private long _id;
 
 	@Column
 	private Long id;
@@ -99,5 +100,33 @@ public class CursoComplementar {
 
 	public void setPeriodo(Integer periodo) {
 		this.periodo = periodo;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		CursoComplementar that = (CursoComplementar) o;
+
+		if (id != null ? !id.equals(that.id) : that.id != null) return false;
+		if (nomeCurso != null ? !nomeCurso.equals(that.nomeCurso) : that.nomeCurso != null)
+			return false;
+		if (instituicao != null ? !instituicao.equals(that.instituicao) : that.instituicao != null)
+			return false;
+		if (dataInicial != null ? !dataInicial.equals(that.dataInicial) : that.dataInicial != null)
+			return false;
+		return dataFinal != null ? dataFinal.equals(that.dataFinal) : that.dataFinal == null;
+
+	}
+
+	@Override
+	public int hashCode() {
+		int result = id != null ? id.hashCode() : 0;
+		result = 31 * result + (nomeCurso != null ? nomeCurso.hashCode() : 0);
+		result = 31 * result + (instituicao != null ? instituicao.hashCode() : 0);
+		result = 31 * result + (dataInicial != null ? dataInicial.hashCode() : 0);
+		result = 31 * result + (dataFinal != null ? dataFinal.hashCode() : 0);
+		return result;
 	}
 }

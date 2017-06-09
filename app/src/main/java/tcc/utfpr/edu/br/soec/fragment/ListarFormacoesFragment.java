@@ -3,20 +3,20 @@ package tcc.utfpr.edu.br.soec.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
+import br.com.rafael.jpdroid.core.Jpdroid;
 import tcc.utfpr.edu.br.soec.R;
+import tcc.utfpr.edu.br.soec.adapter.FormacaoAdapter;
 import tcc.utfpr.edu.br.soec.model.Formacao;
 
 /**
@@ -25,44 +25,38 @@ import tcc.utfpr.edu.br.soec.model.Formacao;
 
 public class ListarFormacoesFragment extends Fragment {
 
+    private AppCompatActivity activity;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_listar_formacoes, container, false);
-        ListView lista = (ListView) view.findViewById(R.id.fragment_listar_formacoes_lista);
+        View layout = inflater.inflate(R.layout.fragment_listar_formacoes, container, false);
+        RecyclerView lista = (RecyclerView) layout.findViewById(R.id.fragment_listar_formacao_lista);
 
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        lista.setLayoutManager(layoutManager);
 
-        // Buscar do banco depois
-        List<Formacao> formacoes = new ArrayList<>();
+        Jpdroid dataBase = Jpdroid.getInstance();
+        List<Formacao> listaFormacao = dataBase.retrieve(Formacao.class);
 
-        for (int i = 1; i<= 10; i++){
-            Formacao formacao = new Formacao();
-            formacao.setNomeCurso("Curso " + i);
-            formacao.setInstituicao("Instituicao " + i);
-            formacao.setDataInicial(new Date());
-            formacao.setDataFinal(new Date());
-            formacao.setId((long) i);
-
-            formacoes.add(formacao);
-        }
-
-//        ArrayAdapter<Formacao> adapter = new ArrayAdapter<Formacao>(getContext(), android.R.layout.simple_list_item_2, formacoes);
-
-        List<String> teste = Arrays.asList("Curso 01", "Curso 02", "Curso 03", "Curso 04", "Curso 05", "Curso 06");
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, teste);
-
+        FormacaoAdapter adapter = new FormacaoAdapter(listaFormacao, getContext());
         lista.setAdapter(adapter);
 
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fragment_listar_formacoes_fab);
+        FloatingActionButton fab = (FloatingActionButton) layout.findViewById(R.id.fragment_listar_formacao_novo_curso);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                getFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.activity_formacoes_framelayout, new CadastrarFormacaoFragment()).commit();
             }
         });
 
-        return view;
+        return layout;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getActivity().setTitle("Formações");
     }
 }

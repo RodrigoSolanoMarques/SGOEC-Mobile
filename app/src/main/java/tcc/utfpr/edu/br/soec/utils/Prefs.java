@@ -17,10 +17,13 @@ public class Prefs {
     * Boolean
     * */
     public static final String DATABASE = "DATABASE";
-    public static final String CONTAUSUARIOCRIADA = "CONTAUSUARIOCRIADA";
+    public static final String CONTA_USUARIO_CRIADA = "CONTA_USUARIO_CRIADA";
     public static final String LEMBRAR_ME = "LEMBRAR_ME";
     public static final String USUARIO = "USUARIO";
     public static final String SENHA = "SENHA";
+    public static final String CADASTRO_PESSOA = "CADASTRO_PESSOA";
+    public static final String CANDIDATO = "CANDIDATO";
+    public static final String CADASTRO_COMPLETO = "CADASTRO_COMPLETO";
 
 
     public static boolean getBoolean(Context context, String chave) {

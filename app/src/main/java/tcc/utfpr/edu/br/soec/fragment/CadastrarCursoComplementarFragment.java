@@ -7,6 +7,7 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,18 +41,27 @@ public class CadastrarCursoComplementarFragment extends Fragment {
     private Button btnCancelar;
 
     private View layout;
+    private CursoComplementar cursoComplementar;
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+
+        /* Bundle - Recupera os argumentos passados por parametros */
+        recuperarBundle();
+
+        super.onActivityCreated(savedInstanceState);
+    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+        getActivity().setTitle("Curso Complementar");
+
         layout = inflater.inflate(R.layout.fragment_cadastrar_curso_complementar, container, false);
 
         /* Recupera Objetos */
         recuperarView(layout);
-
-        /* Bundle - Saved Instance State */
-        recuperarBundle(savedInstanceState);
 
         /* Eventos Listener */
 
@@ -115,39 +125,38 @@ public class CadastrarCursoComplementarFragment extends Fragment {
 
             if (TextUtils.isEmpty(edNomeCurso.getText().toString())) {
                 edNomeCurso.requestFocus();
-                edNomeCurso.setError(getString(R.string.campo_obrigatório));
+                edNomeCurso.setError(getString(R.string.campo_obrigatorio));
                 return;
             }
 
             if (TextUtils.isEmpty(edInstituicao.getText().toString())) {
                 edInstituicao.requestFocus();
-                edInstituicao.setError(getString(R.string.campo_obrigatório));
+                edInstituicao.setError(getString(R.string.campo_obrigatorio));
                 return;
             }
 
             if (TextUtils.isEmpty(edDataInicial.getText().toString())) {
                 edDataInicial.requestFocus();
-                edDataInicial.setError(getString(R.string.campo_obrigatório));
+                edDataInicial.setError(getString(R.string.campo_obrigatorio));
                 return;
             }
 
             if (chbIsConcluido.isChecked()) {
                 if (TextUtils.isEmpty(edDataFinal.getText().toString())) {
                     edDataFinal.requestFocus();
-                    edDataFinal.setError(getString(R.string.campo_obrigatório));
+                    edDataFinal.setError(getString(R.string.campo_obrigatorio));
                     return;
                 }
             } else {
                 if (TextUtils.isEmpty(edPeriodo.getText().toString())) {
                     edPeriodo.requestFocus();
-                    edDataInicial.setError(getString(R.string.campo_obrigatório));
+                    edPeriodo.setError(getString(R.string.campo_obrigatorio));
                     return;
                 }
             }
 
             Jpdroid dataBase = Jpdroid.getInstance();
 
-            CursoComplementar cursoComplementar = new CursoComplementar();
             cursoComplementar.setNomeCurso(edNomeCurso.getText().toString());
             cursoComplementar.setInstituicao(edInstituicao.getText().toString());
             cursoComplementar.setConcluido(chbIsConcluido.isChecked());
@@ -179,45 +188,60 @@ public class CadastrarCursoComplementarFragment extends Fragment {
         getFragmentManager().popBackStack();
     }
 
-    private void recuperarBundle(@Nullable Bundle savedInstanceState) {
-        if (savedInstanceState != null) {
+    private void recuperarBundle() {
 
-            Bundle bundle = savedInstanceState.getBundle(getString(R.string.bundle_cadastrar_curso_complementar_fragment));
+        Bundle bundle = getArguments();
 
-            if (bundle != null) {
-                String nomeCurso = bundle.getString("nomeCurso");
-                String instituicao = bundle.getString("instituicao");
-                String dataInical = bundle.getString("dataInical");
-                String dataFinal = bundle.getString("dataFinal");
-                Boolean isConcluido = bundle.getBoolean("isConcluido");
-                Integer periodo = bundle.getInt("periodo");
+        if (bundle != null) {
 
-                if (!TextUtils.isEmpty(nomeCurso)) {
-                    edNomeCurso.setText(nomeCurso);
-                }
-
-                if (!TextUtils.isEmpty(instituicao)) {
-                    edInstituicao.setText(instituicao);
-                }
-
-                if (!TextUtils.isEmpty(dataInical)) {
-                    edDataInicial.setText(dataInical);
-                }
-
-                if (!TextUtils.isEmpty(dataFinal)) {
-                    edDataFinal.setText(dataFinal);
-                }
-
-                if (periodo > 0) {
-                    edPeriodo.setText(periodo);
-                }
-
-                chbIsConcluido.setChecked(isConcluido);
-            } else {
-                limparCursoComplementar();
+            // Ver se ao destruir o fragment fica null o cursoComplentar
+            if (cursoComplementar == null) {
+                cursoComplementar = (CursoComplementar) bundle.getSerializable("cursoComplementar");
             }
 
+            String nomeCurso = cursoComplementar.getNomeCurso();
+            String instituicao = cursoComplementar.getInstituicao();
+
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+            String dataInical = "";
+            String dataFinal = "";
+            String periodo = "";
+
+            if(cursoComplementar.getDataInicial() != null){
+                dataInical = sdf.format(cursoComplementar.getDataInicial());
+            }
+
+            if(cursoComplementar.getDataFinal() != null){
+                dataFinal = sdf.format(cursoComplementar.getDataFinal());
+            }
+
+            if(cursoComplementar.getPeriodo() != null){
+                periodo = cursoComplementar.getPeriodo().toString();
+            }
+
+            if (!TextUtils.isEmpty(nomeCurso)) {
+                edNomeCurso.setText(nomeCurso);
+            }
+
+            if (!TextUtils.isEmpty(instituicao)) {
+                edInstituicao.setText(instituicao);
+            }
+
+            chbIsConcluido.setChecked(cursoComplementar.getConcluido());
+
+            edDataInicial.setText(dataInical);
+            edDataFinal.setVisibility(View.VISIBLE);
+            edDataFinal.setText(dataFinal);
+            edPeriodo.setText(periodo);
+
         } else {
+
+            // Ver se ao destruir o fragment fica null o cursoComplentar
+            if (cursoComplementar == null) {
+                cursoComplementar = new CursoComplementar();
+            }
+
             limparCursoComplementar();
         }
     }
@@ -225,12 +249,16 @@ public class CadastrarCursoComplementarFragment extends Fragment {
     private void salvarBundle(Bundle outState) {
         Bundle bundle = new Bundle();
 
+        //bundle.putSerializable("cursoComplementar", cursoComplementar);
+
         bundle.putString("nomeCurso", edNomeCurso.getText().toString());
         bundle.putString("instituicao", edInstituicao.getText().toString());
         bundle.putString("dataInical", edDataInicial.getText().toString());
         bundle.putString("dataFinal", edDataFinal.getText().toString());
         bundle.putBoolean("isConcluido", chbIsConcluido.isChecked());
         bundle.putInt("periodo", Integer.parseInt(edNomeCurso.getText().toString()));
+        //bundle.putLong("_id", );
+        //bundle.putLong("id",);
 
         outState.putBundle(getString(R.string.bundle_cadastrar_curso_complementar_fragment), bundle);
     }
@@ -268,7 +296,6 @@ public class CadastrarCursoComplementarFragment extends Fragment {
         //salvarBundle(outState);
 
     }
-
 
 }
 

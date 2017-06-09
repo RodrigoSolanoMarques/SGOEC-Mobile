@@ -1,5 +1,6 @@
 package tcc.utfpr.edu.br.soec.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import br.com.rafael.jpdroid.annotations.Column;
@@ -7,11 +8,11 @@ import br.com.rafael.jpdroid.annotations.Entity;
 import br.com.rafael.jpdroid.annotations.PrimaryKey;
 
 @Entity
-public class Formacao {
+public class Formacao implements Serializable{
 
 	@PrimaryKey
 	@Column
-	private Long _id;
+	private long _id;
 
 	@Column
 	private Long id;
@@ -128,4 +129,6 @@ public class Formacao {
 		result = 31 * result + (dataFinal != null ? dataFinal.hashCode() : 0);
 		return result;
 	}
+
+
 }

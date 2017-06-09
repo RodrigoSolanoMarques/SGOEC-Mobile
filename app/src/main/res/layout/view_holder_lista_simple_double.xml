@@ -10,7 +10,7 @@
 
 
     <TextView
-        android:id="@+id/view_holder_curso_complementar_curso"
+        android:id="@+id/view_holder_text1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
@@ -19,20 +19,17 @@
         android:singleLine="true"
         android:text="@string/cursos_complementares"
         android:textSize="16sp"
+        android:textColor="@color/black_21"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/view_holder_curso_complementar_instituicao"
+        android:id="@+id/view_holder_text2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif"
         android:maxLines="1"
+        android:textColor="@color/black_21"
         android:singleLine="true"
         android:text="@string/instituicao"
-        android:textSize="14sp"
-        />
-
-
-
-
+        android:textSize="14sp" />
 </LinearLayout>

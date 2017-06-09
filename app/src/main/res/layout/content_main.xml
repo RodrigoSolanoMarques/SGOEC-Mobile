@@ -7,4 +7,13 @@
     android:padding="16dp"
     tools:context="tcc.utfpr.edu.br.soec.activity.MainActivity">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:gravity="center"
+        android:textAppearance="?attr/textAppearanceLargePopupMenu"
+        android:textSize="40dp"
+        android:text="Seja Bem-vindo!"/>
+
 </FrameLayout>

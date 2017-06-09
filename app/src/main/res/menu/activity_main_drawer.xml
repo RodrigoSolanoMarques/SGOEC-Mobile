@@ -24,18 +24,36 @@
     </group>
 
     <group android:checkableBehavior="single">
-    <item android:title="@string/favoritos">
-        <menu>
-            <item
-                android:id="@+id/nav_empresas"
-                android:icon="@android:drawable/ic_menu_search"
-                android:title="@string/empresas" />
-            <item
-                android:id="@+id/nav_oportunidade_emprego"
-                android:icon="@android:drawable/ic_menu_search"
-                android:title="@string/oportunidade_emprego" />
-        </menu>
-    </item>
+        <item android:title="@string/buscar_por">
+            <menu>
+                <item
+                    android:id="@+id/nav_area_profissional"
+                    android:icon="@android:drawable/ic_menu_search"
+                    android:title="@string/area_profissional" />
+                <item
+                    android:id="@+id/nav_oportunidade_emprego"
+                    android:icon="@android:drawable/ic_menu_search"
+                    android:title="@string/oportunidade_emprego" />
+            </menu>
+        </item>
+    </group>
+    <group android:checkableBehavior="single">
+        <item android:title="SOEC">
+            <menu>
+
+                <item
+                    android:id="@+id/action_sobre"
+                    android:icon="@android:drawable/ic_menu_info_details"
+                    android:title="@string/sobre" />
+
+                <item
+                    android:id="@+id/action_sair"
+                    android:icon="@android:drawable/ic_menu_close_clear_cancel"
+                    android:title="@string/sair" />
+
+
+            </menu>
+        </item>
     </group>
 
 </menu>

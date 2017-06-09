@@ -14,8 +14,8 @@
 
     <ImageView
         android:id="@+id/nav_header_main_foto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         app:srcCompat="@android:drawable/sym_def_app_icon" />
 
@@ -24,19 +24,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:text="@string/nome"
+        android:text="Rodrigo"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <TextView
         android:id="@+id/nav_header_main_data_nascimento"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/data_nascimento" />
+        android:text="01/01/1990" />
 
     <TextView
         android:id="@+id/nav_header_main_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/email" />
+        android:text="soec@soec.com.br" />
 
 </LinearLayout>

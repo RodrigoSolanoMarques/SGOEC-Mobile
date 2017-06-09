@@ -1,5 +1,6 @@
 package tcc.utfpr.edu.br.soec.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import br.com.rafael.jpdroid.annotations.Column;
@@ -10,7 +11,7 @@ import br.com.rafael.jpdroid.annotations.RelationClass;
 import br.com.rafael.jpdroid.enums.RelationType;
 
 @Entity
-public class Curriculo {
+public class Curriculo implements Serializable {
 
 	@PrimaryKey
 	@Column
@@ -45,6 +46,33 @@ public class Curriculo {
 
     @RelationClass(relationType=RelationType.ManyToMany,joinTable="CurriculoEsperienciaProfissional")
 	private List<ExperienciaProfissional> experienciasProfissionais;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public Long get_id() {
         return _id;

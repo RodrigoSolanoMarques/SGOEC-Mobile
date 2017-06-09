@@ -1,5 +1,6 @@
 package tcc.utfpr.edu.br.soec.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import br.com.rafael.jpdroid.annotations.Column;
@@ -7,11 +8,11 @@ import br.com.rafael.jpdroid.annotations.Entity;
 import br.com.rafael.jpdroid.annotations.PrimaryKey;
 
 @Entity
-public class ExperienciaProfissional {
+public class ExperienciaProfissional implements Serializable{
 
 	@PrimaryKey
 	@Column
-	private Long _id;
+	private long _id;
 
 	@Column
 	private Long id;
@@ -99,5 +100,30 @@ public class ExperienciaProfissional {
 
 	public void setAtividades(String atividades) {
 		this.atividades = atividades;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		ExperienciaProfissional that = (ExperienciaProfissional) o;
+
+		if (nomeEmpresa != null ? !nomeEmpresa.equals(that.nomeEmpresa) : that.nomeEmpresa != null)
+			return false;
+		if (cargo != null ? !cargo.equals(that.cargo) : that.cargo != null) return false;
+		if (dataInicial != null ? !dataInicial.equals(that.dataInicial) : that.dataInicial != null)
+			return false;
+		return dataFinal != null ? dataFinal.equals(that.dataFinal) : that.dataFinal == null;
+
+	}
+
+	@Override
+	public int hashCode() {
+		int result = nomeEmpresa != null ? nomeEmpresa.hashCode() : 0;
+		result = 31 * result + (cargo != null ? cargo.hashCode() : 0);
+		result = 31 * result + (dataInicial != null ? dataInicial.hashCode() : 0);
+		result = 31 * result + (dataFinal != null ? dataFinal.hashCode() : 0);
+		return result;
 	}
 }

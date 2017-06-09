@@ -71,7 +71,7 @@ public class CriarBancoDadosAsyncTask extends AsyncTask<Void, String, Void> {
     protected Void doInBackground(Void... voids) {
         try {
 
-            if(!Prefs.getBoolean(context, Prefs.DATABASE)){
+            if (!Prefs.getBoolean(context, Prefs.DATABASE)) {
                 publishProgress("Criando o Banco de Dados");
 
                 database.addEntity(ContaUsuario.class);
@@ -111,7 +111,6 @@ public class CriarBancoDadosAsyncTask extends AsyncTask<Void, String, Void> {
             if (textView != null) {
                 progressDialog.dismiss();
             }
-            Log.e("Banco", "AreaProfissional22");
         }
 
         return null;
