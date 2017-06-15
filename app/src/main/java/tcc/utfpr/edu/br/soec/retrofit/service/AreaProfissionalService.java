@@ -1,4 +1,4 @@
-package tcc.utfpr.edu.br.soec.service;
+package tcc.utfpr.edu.br.soec.retrofit.service;
 
 import java.util.List;
 

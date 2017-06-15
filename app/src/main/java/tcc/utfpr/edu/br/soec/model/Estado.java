@@ -1,15 +1,18 @@
 package tcc.utfpr.edu.br.soec.model;
 
+import java.io.Serializable;
+
 import br.com.rafael.jpdroid.annotations.Column;
 import br.com.rafael.jpdroid.annotations.Entity;
 import br.com.rafael.jpdroid.annotations.PrimaryKey;
+import tcc.utfpr.edu.br.soec.dto.EstadoDTO;
 
 /**
  * Created by rodri on 07/02/2017.
  */
 
 @Entity
-public class Estado {
+public class Estado implements Serializable {
 
     @PrimaryKey
     @Column
@@ -57,5 +60,15 @@ public class Estado {
 
     public void setUf(String uf) {
         this.uf = uf;
+    }
+
+    public Estado converterEstadoDTO(EstadoDTO estadoDTO){
+
+        Estado estado = new Estado();
+        estado.setId(estadoDTO.getId());
+        estado.setNome(estadoDTO.getNome());
+        estado.setUf(estadoDTO.getUf());
+
+        return estado;
     }
 }

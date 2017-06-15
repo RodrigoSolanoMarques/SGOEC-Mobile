@@ -1,11 +1,15 @@
 package tcc.utfpr.edu.br.soec.model;
 
+import java.util.List;
+
 import br.com.rafael.jpdroid.annotations.Column;
 import br.com.rafael.jpdroid.annotations.Entity;
 import br.com.rafael.jpdroid.annotations.ForeignKey;
 import br.com.rafael.jpdroid.annotations.PrimaryKey;
 import br.com.rafael.jpdroid.annotations.RelationClass;
+import br.com.rafael.jpdroid.core.Jpdroid;
 import br.com.rafael.jpdroid.enums.RelationType;
+import tcc.utfpr.edu.br.soec.dto.CargoDTO;
 
 @Entity
 public class Cargo {
@@ -101,5 +105,32 @@ public class Cargo {
 
     public void setAreaProfissional(AreaProfissional areaProfissional) {
         this.areaProfissional = areaProfissional;
+    }
+
+    public Cargo converterCargoDTO(CargoDTO cargoDTO){
+
+        Cargo cargo = new Cargo();
+        cargo.setId(cargoDTO.getId());
+        cargo.setNome(cargoDTO.getNome());
+        cargo.setDescricao(cargoDTO.getDescricao());
+
+        Jpdroid dataBase = Jpdroid.getInstance();
+        dataBase.open();
+
+        List<AreaProfissional> areaProfissionals = dataBase.retrieve(AreaProfissional.class, "id = " + cargoDTO.getAreaProfissional().getId());
+        if(!areaProfissionals.isEmpty()){
+            AreaProfissional areaProfissional = areaProfissionals.get(0);
+            cargo.setIdAreaProfissional(areaProfissional.get_id());
+            cargo.setAreaProfissional(areaProfissional);
+        }
+
+        List<Empresa> empresas = dataBase.retrieve(Empresa.class, "id = " + cargoDTO.getEmpresa().getId());
+        if(!empresas.isEmpty()){
+            Empresa empresa = empresas.get(0);
+            cargo.setIdEmpresa(empresa.get_id());
+            cargo.setEmpresa(empresa);
+        }
+
+        return cargo;
     }
 }

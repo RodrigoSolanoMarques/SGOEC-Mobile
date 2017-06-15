@@ -1,10 +1,12 @@
 package tcc.utfpr.edu.br.soec.dto;
 
+import java.io.Serializable;
+
 /**
  * Created by rodri on 07/06/2017.
  */
 
-public class AreaProfissionalDTO {
+public class AreaProfissionalDTO implements Serializable {
 
         private Long id;
 

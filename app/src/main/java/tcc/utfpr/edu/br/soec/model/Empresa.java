@@ -1,13 +1,16 @@
 package tcc.utfpr.edu.br.soec.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import br.com.rafael.jpdroid.annotations.Column;
 import br.com.rafael.jpdroid.annotations.Entity;
 import br.com.rafael.jpdroid.annotations.ForeignKey;
 import br.com.rafael.jpdroid.annotations.PrimaryKey;
 import br.com.rafael.jpdroid.annotations.RelationClass;
+import br.com.rafael.jpdroid.core.Jpdroid;
 import br.com.rafael.jpdroid.enums.RelationType;
+import tcc.utfpr.edu.br.soec.dto.EmpresaDTO;
 
 @Entity
 public class Empresa implements Serializable {
@@ -144,5 +147,30 @@ public class Empresa implements Serializable {
 
     public void setCidade(Cidade cidade) {
         this.cidade = cidade;
+    }
+
+    public Empresa converterEmpresaDTO(EmpresaDTO empresaDTO){
+
+        Empresa empresa = new Empresa();
+        empresa.setId(empresaDTO.getId());
+        empresa.setNomeFantasia(empresaDTO.getNomeFantasia());
+        empresa.setRazaoSocial(empresaDTO.getRazaoSocial());
+        empresa.setCpfCnpj(empresaDTO.getCpfCnpj());
+        empresa.setInscricaoEstadual(empresaDTO.getInscricaoEstadual());
+        empresa.setMissao(empresaDTO.getMissao());
+        empresa.setVisao(empresaDTO.getVisao());
+        empresa.setValores(empresaDTO.getValores());
+        empresa.setPessoaJuridica(empresaDTO.getPessoaJuridica());
+
+        Jpdroid dataBase = Jpdroid.getInstance();
+        dataBase.open();
+
+        List<Cidade> cidades = dataBase.retrieve(Cidade.class, "id = " + empresaDTO.getCidade().getId());
+        if(!cidades.isEmpty()){
+            Cidade cidade = cidades.get(0);
+            empresa.setIdCidade(cidade.get_id());
+            empresa.setCidade(cidade);
+        }
+        return empresa;
     }
 }

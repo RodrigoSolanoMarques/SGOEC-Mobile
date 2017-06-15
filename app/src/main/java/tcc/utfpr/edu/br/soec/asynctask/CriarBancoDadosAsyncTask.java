@@ -4,14 +4,12 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.widget.TextView;
 
-import java.io.Console;
-
 import br.com.rafael.jpdroid.core.Jpdroid;
-import tcc.utfpr.edu.br.soec.activity.MainActivity;
+import tcc.utfpr.edu.br.soec.activity.LoginActivity;
 import tcc.utfpr.edu.br.soec.model.AreaProfissional;
+import tcc.utfpr.edu.br.soec.model.AvaliacaoCurriculo;
 import tcc.utfpr.edu.br.soec.model.Candidato;
 import tcc.utfpr.edu.br.soec.model.Cargo;
 import tcc.utfpr.edu.br.soec.model.Cidade;
@@ -24,6 +22,7 @@ import tcc.utfpr.edu.br.soec.model.ExperienciaProfissional;
 import tcc.utfpr.edu.br.soec.model.Formacao;
 import tcc.utfpr.edu.br.soec.model.OportunidadeEmprego;
 import tcc.utfpr.edu.br.soec.model.Pessoa;
+import tcc.utfpr.edu.br.soec.sincronizacao.ListaSincronizacao;
 import tcc.utfpr.edu.br.soec.utils.Prefs;
 
 /**
@@ -35,7 +34,7 @@ public class CriarBancoDadosAsyncTask extends AsyncTask<Void, String, Void> {
     private ProgressDialog progressDialog;
     private Jpdroid database;
     private Context context;
-    private TextView textView;
+    private TextView textViewProgressDialog;
     private Class aClass;
 
     public CriarBancoDadosAsyncTask(Context context) {
@@ -47,22 +46,15 @@ public class CriarBancoDadosAsyncTask extends AsyncTask<Void, String, Void> {
         this.aClass = aClass;
     }
 
-    public CriarBancoDadosAsyncTask(Context context, TextView textView, Class aClass) {
+    public CriarBancoDadosAsyncTask(Context context, TextView textViewProgressDialog, Class aClass) {
         this.context = context;
         this.aClass = aClass;
-        this.textView = textView;
+        this.textViewProgressDialog = textViewProgressDialog;
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        if (textView == null) {
-            progressDialog = new ProgressDialog(context);
-            progressDialog.setMessage("Aguarde");
-            progressDialog.setCancelable(false);
-            progressDialog.show();
-        }
-
         database = Jpdroid.getInstance();
         database.setContext(context);
     }
@@ -87,30 +79,25 @@ public class CriarBancoDadosAsyncTask extends AsyncTask<Void, String, Void> {
                 database.addEntity(Empresa.class);
                 database.addEntity(Cargo.class);
                 database.addEntity(OportunidadeEmprego.class);
-
-                database.open();
+                database.addEntity(AvaliacaoCurriculo.class);
 
                 Prefs.setBoolean(context, Prefs.DATABASE, true);
                 publishProgress("Banco de Dados Criado");
             }
+            database.open();
 
-            new Thread().sleep(2000);
+            publishProgress("Sincronizando");
 
-            publishProgress("Atualizando Banco de Dados");
+            boolean isCargaInicial = false;
+            if(aClass == LoginActivity.class){
+                isCargaInicial = true;
+            }
 
-            new Thread().sleep(3000);
-
-            publishProgress("Banco de Dados Atualizado");
-
-            new Thread().sleep(2000);
+            new ListaSincronizacao(isCargaInicial).sincronizarTudo(context);
 
         } catch (Exception e) {
             e.printStackTrace();
             Prefs.setBoolean(context, Prefs.DATABASE, false);
-            publishProgress("Não Foi Possível Criar o Banco de Dados");
-            if (textView != null) {
-                progressDialog.dismiss();
-            }
         }
 
         return null;
@@ -118,11 +105,8 @@ public class CriarBancoDadosAsyncTask extends AsyncTask<Void, String, Void> {
 
     @Override
     protected void onProgressUpdate(String... values) {
-        if (textView != null) {
-            textView.setText(values[0]);
-        } else {
-            //Atualiza a mensagem do ProgressDialog
-            this.progressDialog.setMessage(values[0]);
+        if (textViewProgressDialog != null) {
+            textViewProgressDialog.setText(values[0]);
         }
     }
 

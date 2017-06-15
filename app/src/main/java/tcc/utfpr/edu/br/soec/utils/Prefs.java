@@ -13,6 +13,11 @@ public class Prefs {
 
     public static final String PREF_ID = "SOEC";
 
+    /**
+     * Web Service
+     */
+    public static final String LINKWEBSERVICE = "http://192.168.1.4:8085/api/";
+
     /*
     * Boolean
     * */

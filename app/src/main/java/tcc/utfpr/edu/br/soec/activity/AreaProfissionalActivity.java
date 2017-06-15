@@ -1,9 +1,7 @@
 package tcc.utfpr.edu.br.soec.activity;
 
-import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
@@ -17,7 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Spinner;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,9 +26,8 @@ import tcc.utfpr.edu.br.soec.adapter.AreaProfissionalAdapter;
 import tcc.utfpr.edu.br.soec.dto.AreaProfissionalDTO;
 import tcc.utfpr.edu.br.soec.interfaces.RecyclerViewOnClickListenerHack;
 import tcc.utfpr.edu.br.soec.model.AreaProfissional;
-import tcc.utfpr.edu.br.soec.model.Empresa;
 import tcc.utfpr.edu.br.soec.retrofit.RetrofitInicializador;
-import tcc.utfpr.edu.br.soec.service.AreaProfissionalService;
+import tcc.utfpr.edu.br.soec.retrofit.service.AreaProfissionalService;
 import tcc.utfpr.edu.br.soec.utils.ToastUtils;
 
 public class AreaProfissionalActivity extends AppCompatActivity implements RecyclerViewOnClickListenerHack {

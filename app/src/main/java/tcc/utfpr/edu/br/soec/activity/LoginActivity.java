@@ -174,7 +174,7 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        if (activity_login_lembre_me.isSelected()) {
+        if (activity_login_lembre_me.isChecked()) {
             Prefs.setBoolean(context, Prefs.LEMBRAR_ME, true);
         } else {
             Prefs.setBoolean(context, Prefs.LEMBRAR_ME, false);

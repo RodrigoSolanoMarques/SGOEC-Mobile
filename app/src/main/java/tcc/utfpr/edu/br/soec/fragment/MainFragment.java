@@ -95,7 +95,10 @@ public class MainFragment extends Fragment
         nav_header_main_foto = (ImageView) header.findViewById(R.id.nav_header_main_foto);
 
         caminhoFoto = pessoas.get(0).getFoto();
-        carregarFoto();
+
+        if(!caminhoFoto.equals("null") && caminhoFoto != null){
+            carregarFoto();
+        }
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         nav_header_main_email.setText(contaUsuarios.get(0).getEmail());

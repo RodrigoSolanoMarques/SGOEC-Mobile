@@ -1,11 +1,17 @@
 package tcc.utfpr.edu.br.soec.model;
 
+import android.database.Cursor;
+
+import java.util.List;
+
 import br.com.rafael.jpdroid.annotations.Column;
 import br.com.rafael.jpdroid.annotations.Entity;
 import br.com.rafael.jpdroid.annotations.ForeignKey;
 import br.com.rafael.jpdroid.annotations.PrimaryKey;
 import br.com.rafael.jpdroid.annotations.RelationClass;
+import br.com.rafael.jpdroid.core.Jpdroid;
 import br.com.rafael.jpdroid.enums.RelationType;
+import tcc.utfpr.edu.br.soec.dto.CidadeDTO;
 
 /**
  * Created by rodri on 07/02/2017.
@@ -24,11 +30,11 @@ public class Cidade {
     @Column
     private String nome;
 
-    @ForeignKey(joinEntity=Estado.class,joinPrimaryKey="_id")
+    @ForeignKey(joinEntity = Estado.class, joinPrimaryKey = "_id")
     @Column
     private Long idEstado;
 
-    @RelationClass(relationType= RelationType.OneToMany, joinColumn="idEstado")
+    @RelationClass(relationType = RelationType.OneToMany, joinColumn = "idEstado")
     private Estado estado;
 
     public Cidade() {
@@ -72,5 +78,23 @@ public class Cidade {
 
     public void setIdEstado(Long idEstado) {
         this.idEstado = idEstado;
+    }
+
+    public Cidade converterCidadeDTO(CidadeDTO cidadeDTO) {
+
+        Cidade cidade = new Cidade();
+        cidade.setId(cidadeDTO.getId());
+        cidade.setNome(cidadeDTO.getNome());
+
+        Jpdroid dataBase = Jpdroid.getInstance();
+        dataBase.open();
+
+        List<Estado> estados = dataBase.retrieve(Estado.class, "id = " + cidadeDTO.getEstado().getId());
+        if(!estados.isEmpty()){
+            Estado estado = estados.get(0);
+            cidade.setIdEstado(estado.get_id());
+            cidade.setEstado(estado);
+        }
+        return cidade;
     }
 }
