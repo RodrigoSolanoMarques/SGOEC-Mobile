@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.Log;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.rafael.jpdroid.core.Jpdroid;
@@ -34,7 +35,7 @@ public class SincronizacaoExperienciaProfissional extends SincronizacaoAbstract<
             List<ExperienciaProfissional> experienciaProfissionals = dataBase.retrieve(ExperienciaProfissional.class);
 
             if (experienciaProfissionals.isEmpty()) {
-                return null;
+                return new ArrayList<>();
             } else {
                 Call<List<ExperienciaProfissional>> cursosComplementaresWeb = retrofitInicializador.getExperienciaprofissionalService().salvar(experienciaProfissionals);
                 return cursosComplementaresWeb.execute().body();

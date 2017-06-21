@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.Log;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.rafael.jpdroid.core.Jpdroid;
@@ -31,10 +32,10 @@ public class SincronizacaoCurriculo extends SincronizacaoAbstract<Curriculo> {
     protected List<Curriculo> post(Jpdroid dataBase, RetrofitInicializador retrofitInicializador) {
         try {
 
-            List<Curriculo> curriculos = dataBase.retrieve(Curriculo.class);
+            List<Curriculo> curriculos = dataBase.retrieve(Curriculo.class, true);
 
             if (curriculos.isEmpty()) {
-                return null;
+                return new ArrayList<>();
             } else {
                 Call<List<Curriculo>> cursosComplementaresWeb = retrofitInicializador.getCurriculolService().salvar(curriculos);
                 return cursosComplementaresWeb.execute().body();

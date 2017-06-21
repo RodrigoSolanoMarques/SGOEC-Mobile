@@ -1,5 +1,7 @@
 package tcc.utfpr.edu.br.soec.model;
 
+import java.io.Serializable;
+
 import br.com.rafael.jpdroid.annotations.Column;
 import br.com.rafael.jpdroid.annotations.Entity;
 import br.com.rafael.jpdroid.annotations.PrimaryKey;
@@ -9,7 +11,7 @@ import br.com.rafael.jpdroid.annotations.PrimaryKey;
  */
 
 @Entity
-public class ContaUsuario {
+public class ContaUsuario implements Serializable{
 
     @PrimaryKey
     @Column

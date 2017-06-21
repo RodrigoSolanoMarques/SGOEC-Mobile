@@ -2,6 +2,7 @@ package tcc.utfpr.edu.br.soec.model;
 
 import android.database.Cursor;
 
+import java.io.Serializable;
 import java.util.List;
 
 import br.com.rafael.jpdroid.annotations.Column;
@@ -18,7 +19,7 @@ import tcc.utfpr.edu.br.soec.dto.CidadeDTO;
  */
 
 @Entity
-public class Cidade {
+public class Cidade implements Serializable {
 
     @PrimaryKey
     @Column

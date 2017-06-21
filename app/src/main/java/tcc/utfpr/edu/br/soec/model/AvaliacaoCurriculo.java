@@ -1,5 +1,6 @@
 package tcc.utfpr.edu.br.soec.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import br.com.rafael.jpdroid.annotations.Column;
@@ -11,7 +12,7 @@ import br.com.rafael.jpdroid.enums.RelationType;
 import tcc.utfpr.edu.br.soec.Enum.EStatusCurriculo;
 
 @Entity
-public class AvaliacaoCurriculo {
+public class AvaliacaoCurriculo  implements Serializable{
 
     @PrimaryKey
     @Column

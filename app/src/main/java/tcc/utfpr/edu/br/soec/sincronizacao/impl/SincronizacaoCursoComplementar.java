@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.Log;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.rafael.jpdroid.core.Jpdroid;
@@ -34,7 +35,7 @@ public class SincronizacaoCursoComplementar extends SincronizacaoAbstract<CursoC
             List<CursoComplementar> cursosComplementares = dataBase.retrieve(CursoComplementar.class);
 
             if (cursosComplementares.isEmpty()) {
-                return null;
+                return new ArrayList<>();
             } else {
                 Call<List<CursoComplementar>> cursosComplementaresWeb = retrofitInicializador.getCursoComplementaresService().salvar(cursosComplementares);
                 return cursosComplementaresWeb.execute().body();

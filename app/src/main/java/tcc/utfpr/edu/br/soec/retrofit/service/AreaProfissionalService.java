@@ -15,5 +15,5 @@ public interface AreaProfissionalService {
     Call<List<AreaProfissionalDTO>> listar();
 
     @GET("areaProfissional/nome")
-    Call<List<AreaProfissional>> findByNome(@Body AreaProfissional areaProfissional);
+    Call<List<AreaProfissional>> findByNome(@Body String areaProfissional);
 }

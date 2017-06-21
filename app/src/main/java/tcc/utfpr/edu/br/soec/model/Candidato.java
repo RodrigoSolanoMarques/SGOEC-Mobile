@@ -19,11 +19,11 @@ public class Candidato implements Serializable{
 	@Column
 	private Long id;
 
-	@ForeignKey(joinEntity = Pessoa.class, joinPrimaryKey = "_id", deleteCascade = true)
+	@ForeignKey(joinEntity = Pessoa.class, joinPrimaryKey = "_id")
 	@Column
 	private Long idPessoa;
 
-	@ForeignKey(joinEntity = ContaUsuario.class, joinPrimaryKey = "_id", deleteCascade = true)
+	@ForeignKey(joinEntity = ContaUsuario.class, joinPrimaryKey = "_id")
 	@Column
 	private Long idContaUsuario;
 

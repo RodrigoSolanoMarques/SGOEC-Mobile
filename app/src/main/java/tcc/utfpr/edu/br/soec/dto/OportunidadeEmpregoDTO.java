@@ -1,10 +1,12 @@
 package tcc.utfpr.edu.br.soec.dto;
 
+import java.io.Serializable;
+
 /**
  * Created by rodri on 15/06/2017.
  */
 
-public class OportunidadeEmpregoDTO {
+public class OportunidadeEmpregoDTO implements Serializable {
 
     private Long id;
     private CidadeDTO cidade;
@@ -48,7 +50,7 @@ public class OportunidadeEmpregoDTO {
         this.descricao = descricao;
     }
 
-    public Boolean getSalario() {
+    public Boolean getIsSalario() {
         return isSalario;
     }
 
@@ -80,7 +82,11 @@ public class OportunidadeEmpregoDTO {
         isFinalizado = finalizado;
     }
 
-    public void setSalario(Boolean salario) {
+    public void setIsSalario(Boolean salario) {
         isSalario = salario;
+    }
+
+    public String getSalario() {
+        return salario;
     }
 }

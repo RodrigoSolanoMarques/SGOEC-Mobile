@@ -74,22 +74,7 @@ public class CadastrarCurriculoActivity extends AppCompatActivity implements Cad
 
     private void getExtras(Bundle savedInstanceState) {
         Bundle extras = getIntent().getExtras();
-
-       /* if(savedInstanceState != null && savedInstanceState.containsKey("curriculo")){
-            curriculo = (Curriculo) extras.getSerializable("curriculo");
-            savedInstanceState.clear();
-        }else*/
         if (extras != null && extras.containsKey("curriculo")) {
-
-//            Curriculo curriculoExtra = (Curriculo) extras.getSerializable("curriculo");
-
-//            List<Curriculo> curriculos = dataBase.retrieve(Curriculo.class, "_id = " + curriculoExtra.get_id(), true );
-//
-//            if (curriculos.size() > 0) {
-//                curriculo = curriculos.get(0);
-//            } else {
-//                curriculo = curriculoExtra;
-//            }
 
             curriculo = (Curriculo) extras.getSerializable("curriculo");
 

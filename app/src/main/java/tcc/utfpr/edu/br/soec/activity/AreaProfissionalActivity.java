@@ -1,92 +1,118 @@
 package tcc.utfpr.edu.br.soec.activity;
 
-import android.app.SearchManager;
 import android.content.Context;
-import android.os.Build;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.rafael.jpdroid.core.Jpdroid;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import tcc.utfpr.edu.br.soec.R;
-import tcc.utfpr.edu.br.soec.adapter.AreaProfissionalAdapter;
-import tcc.utfpr.edu.br.soec.dto.AreaProfissionalDTO;
+import tcc.utfpr.edu.br.soec.adapter.OportunidadeEmpregoAdapter;
+import tcc.utfpr.edu.br.soec.dto.OportunidadeEmpregoDTO;
 import tcc.utfpr.edu.br.soec.interfaces.RecyclerViewOnClickListenerHack;
 import tcc.utfpr.edu.br.soec.model.AreaProfissional;
+import tcc.utfpr.edu.br.soec.model.AvaliacaoCurriculo;
 import tcc.utfpr.edu.br.soec.retrofit.RetrofitInicializador;
 import tcc.utfpr.edu.br.soec.retrofit.service.AreaProfissionalService;
+import tcc.utfpr.edu.br.soec.retrofit.service.OportunidadeEmpregoService;
 import tcc.utfpr.edu.br.soec.utils.ToastUtils;
 
 public class AreaProfissionalActivity extends AppCompatActivity implements RecyclerViewOnClickListenerHack {
-    // mudar de empresas favoritas para area profissional search
-    private RecyclerView mRecyclerView;
+
+
+//    private List<AreaProfissionalDTO> mList;
+//    private List<AreaProfissionalDTO> mlistAux;
+//    private List<AreaProfissional> retorno = new ArrayList<>();
+
+    // Banco de dados
+    private Jpdroid jpdroid;
+
+    private Toolbar toolbar;
     private Spinner mSpinnerFiltroAreaProfissional;
-    private List<AreaProfissionalDTO> mList;
-    private List<AreaProfissionalDTO> mlistAux;
-    private List<AreaProfissional> retorno = new ArrayList<>();
+    private RecyclerView mRecyclerView;
+    private Context mContext;
+
+    // Listas
+    private List<String> mNomeAreasProfissionais = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_empresas_favoritas);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.activity_empresas_favoritas_toolbar);
-        toolbar.setTitle("Area Profissional");
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        mContext = getApplicationContext();
 
-        if (savedInstanceState != null) {
-            mList = (List<AreaProfissionalDTO>) savedInstanceState.getSerializable("mList");
-            mlistAux = (List<AreaProfissionalDTO>) savedInstanceState.getSerializable("mListAux");
-        } else {
-            mList = new ArrayList<>();
+        getViewById();
+        jpdroid = Jpdroid.getInstance();
 
-            AreaProfissionalService areaProfissionalService = new RetrofitInicializador().getAreaProfissionalService();
-            Call<List<AreaProfissionalDTO>> listar = areaProfissionalService.listar();
+        constructorToolbar();
 
-            listar.enqueue(new Callback<List<AreaProfissionalDTO>>() {
-                @Override
-                public void onResponse(Call<List<AreaProfissionalDTO>> call, Response<List<AreaProfissionalDTO>> response) {
-                    mList.addAll(response.body());
+//        if (savedInstanceState != null) {
+//            mList = (List<AreaProfissionalDTO>) savedInstanceState.getSerializable("mList");
+//            mlistAux = (List<AreaProfissionalDTO>) savedInstanceState.getSerializable("mListAux");
+//        } else {
+//            mList = new ArrayList<>();
+//
+//            AreaProfissionalService areaProfissionalService = new RetrofitInicializador().getOportunidadeEmpregoService();
+//            Call<List<AreaProfissionalDTO>> listar = areaProfissionalService.listar();
+//
+//            listar.enqueue(new Callback<List<AreaProfissionalDTO>>() {
+//                @Override
+//                public void onResponse(Call<List<AreaProfissionalDTO>> call, Response<List<AreaProfissionalDTO>> response) {
+//                    mList.addAll(response.body());
+//
+//                    AreaProfissionalAdapter areaProfissionalAdapter = new AreaProfissionalAdapter(getApplicationContext(), mList);
+//                    areaProfissionalAdapter.setRecyclerViewOnClickListenerHack(AreaProfissionalActivity.this);
+//                    mRecyclerView.setAdapter(areaProfissionalAdapter);
+//                }
+//
+//                @Override
+//                public void onFailure(Call<List<AreaProfissionalDTO>> call, Throwable t) {
+//                    ToastUtils.setMsgLong(getApplicationContext(), "Não foi possível carregar a lista");
+//                }
+//            });
+//        }
 
-                    AreaProfissionalAdapter areaProfissionalAdapter = new AreaProfissionalAdapter(getApplicationContext(), mList);
-                    areaProfissionalAdapter.setRecyclerViewOnClickListenerHack(AreaProfissionalActivity.this);
-                    mRecyclerView.setAdapter(areaProfissionalAdapter);
-                }
+        // Recuperando Area Profissional do banco de dados
 
-                @Override
-                public void onFailure(Call<List<AreaProfissionalDTO>> call, Throwable t) {
-                    ToastUtils.setMsgLong(getApplicationContext(), "Não foi possível carregar a lista");
-                }
-            });
-        }
-        mSpinnerFiltroAreaProfissional = (Spinner) findViewById(R.id.activity_empresas_favoritas_spinner_filtro);
-        mRecyclerView = (RecyclerView) findViewById(R.id.activity_empresas_favoritas_lista);
-        mRecyclerView.setHasFixedSize(true);
+        List<AreaProfissional> areasProfissionais = jpdroid.retrieve(AreaProfissional.class);
+        mNomeAreasProfissionais.add("Todos");
+        mNomeAreasProfissionais.addAll(getNomeAreaProfissional(areasProfissionais));
 
-        LinearLayoutManager llm = new LinearLayoutManager(getApplicationContext());
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(llm);
+        setAdapterMSpinnerFiltroAreaProfissional(mNomeAreasProfissionais);
+        setOnItemSelectedMSpinnerFiltroAreaProfissional();
+
+        constructorRecycleView();
+
+        mSpinnerFiltroAreaProfissional.setSelection(0);
+        enqueueAreaProfissionalServiceFindByNome(getOportunidadeEmpregoService());
+
     }
 
     @Override
     public void onClickListener(View view, int position) {
-        ToastUtils.setMsgLong(getApplicationContext(), "Position" + position);
-        AreaProfissionalAdapter areaProfissionalAdapter = (AreaProfissionalAdapter) mRecyclerView.getAdapter();
-        areaProfissionalAdapter.removeListItem(position);
+        OportunidadeEmpregoAdapter adapter = (OportunidadeEmpregoAdapter) mRecyclerView.getAdapter();
+        OportunidadeEmpregoDTO item = adapter.getItem(position);
+
+        Intent intent = new Intent(getApplicationContext(), AvaliacaoCurriculoActivity.class);
+        intent.putExtra("oportunidadeEmprego", item);
+        startActivity(intent);
+
     }
 
     @Override
@@ -103,74 +129,83 @@ public class AreaProfissionalActivity extends AppCompatActivity implements Recyc
         return true;
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_menu_empresas_favoritas, menu);
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView;
-        MenuItem item = menu.findItem(R.id.action_searchable_activity);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            searchView = (SearchView) item.getActionView();
-        } else {
-            searchView = (SearchView) MenuItemCompat.getActionView(item);
-        }
-
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setQueryHint("Pesquisar");
-        return true;
+    private void getViewById() {
+        toolbar = (Toolbar) findViewById(R.id.activity_empresas_favoritas_toolbar);
+        mSpinnerFiltroAreaProfissional = (Spinner) findViewById(R.id.activity_empresas_favoritas_spinner_filtro);
+        mRecyclerView = (RecyclerView) findViewById(R.id.activity_empresas_favoritas_lista);
     }
 
-//    private class ListarAreaProfissionalAsyncTask extends AsyncTask<Void, Void, List<AreaProfissional>> {
-//
-//        private Context context;
-//        private ProgressDialog progress;
-//
-//        public ListarAreaProfissionalAsyncTask(Context context) {
-//            this.context = context;
-//        }
-//
-//        @Override
-//        protected void onPreExecute() {
-//            this.progress = new ProgressDialog(context);
-//            this.progress.setMessage("Carregando");
-//            this.progress.show();
-//        }
-//
-//        @Override
-//        protected List<AreaProfissional> doInBackground(Void... params) {
-//
-//            AreaProfissionalService areaProfissionalService = new RetrofitInicializador().getAreaProfissionalService();
-//
-//            Call<List<AreaProfissionalDTO>> listar = areaProfissionalService.listar();
-//
-//            listar.enqueue(new Callback<List<AreaProfissionalDTO>>() {
-//                @Override
-//                public void onResponse(Call<List<AreaProfissionalDTO>> call, Response<List<AreaProfissionalDTO>> response) {
-//                    //retorno.addAll(response.body());
-//                }
-//
-//                @Override
-//                public void onFailure(Call<List<AreaProfissionalDTO>> call, Throwable t) {
-//                    ToastUtils.setMsgLong(getApplicationContext(), "Não foi possível carregar a lista");
-//                }
-//            });
-//
-//            return retorno;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(List<AreaProfissional> areaProfissionais) {
-//
-//            if (areaProfissionais != null) {
-//                AreaProfissionalActivity.this.mList.addAll(areaProfissionais);
-//                mRecyclerView.setAdapter(new AreaProfissionalAdapter(context, areaProfissionais));
-//            }
-//
-//            this.progress.dismiss();
-//
-//        }
-//    }
+    private void constructorToolbar() {
+        toolbar.setTitle("Area Profissional");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
 
+    private void constructorRecycleView() {
+        mRecyclerView.setHasFixedSize(true);
+        LinearLayoutManager llm = new LinearLayoutManager(getApplicationContext());
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(llm);
+    }
 
+    private List<String> getNomeAreaProfissional(List<AreaProfissional> areasProfissionais) {
+
+        List<String> nomeAreasProfissionais = new ArrayList<>();
+        for (AreaProfissional areaProfissional : areasProfissionais) {
+            nomeAreasProfissionais.add(areaProfissional.getNome());
+        }
+
+        return nomeAreasProfissionais;
+    }
+
+    private void setAdapterMSpinnerFiltroAreaProfissional(List<String> areasProfissionais) {
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, areasProfissionais.toArray(new String[]{}));
+        mSpinnerFiltroAreaProfissional.setAdapter(spinnerArrayAdapter);
+    }
+
+    private OportunidadeEmpregoService getOportunidadeEmpregoService() {
+        RetrofitInicializador retrofitInicializador = new RetrofitInicializador();
+        return retrofitInicializador.getOportunidadeEmpregoService();
+    }
+
+    private void enqueueAreaProfissionalServiceFindByNome(OportunidadeEmpregoService oportunidadeEmpregoService) {
+
+        Call<List<OportunidadeEmpregoDTO>> callOportunidadeEmprego = oportunidadeEmpregoService.listarOportunidadeEmpregoByAreaProfissional((String) mSpinnerFiltroAreaProfissional.getSelectedItem());
+
+        callOportunidadeEmprego.enqueue(new Callback<List<OportunidadeEmpregoDTO>>() {
+            @Override
+            public void onResponse(Call<List<OportunidadeEmpregoDTO>> call, Response<List<OportunidadeEmpregoDTO>> response) {
+                List<OportunidadeEmpregoDTO> body = response.body();
+
+                if (!body.isEmpty()) {
+                    OportunidadeEmpregoAdapter oportunidadeEmpregoAdapter = new OportunidadeEmpregoAdapter(getApplicationContext(), body);
+                    oportunidadeEmpregoAdapter.setRecyclerViewOnClickListenerHack(AreaProfissionalActivity.this);
+                    mRecyclerView.setAdapter(oportunidadeEmpregoAdapter);
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<OportunidadeEmpregoDTO>> call, Throwable t) {
+                OportunidadeEmpregoAdapter oportunidadeEmpregoAdapter = new OportunidadeEmpregoAdapter(getApplicationContext(), new ArrayList<OportunidadeEmpregoDTO>());
+                oportunidadeEmpregoAdapter.setRecyclerViewOnClickListenerHack(AreaProfissionalActivity.this);
+                mRecyclerView.setAdapter(oportunidadeEmpregoAdapter);
+            }
+        });
+    }
+
+    private void setOnItemSelectedMSpinnerFiltroAreaProfissional() {
+        mSpinnerFiltroAreaProfissional.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                enqueueAreaProfissionalServiceFindByNome(getOportunidadeEmpregoService());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
 }

@@ -6,12 +6,12 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 import tcc.utfpr.edu.br.soec.model.Formacao;
+import tcc.utfpr.edu.br.soec.model.Pessoa;
 
 
-public interface FormacaoService {
+public interface PessoaService {
 
-    @POST("formacao/salvar")
-    Call<List<Formacao>> salvar(@Body List<Formacao> formacoes);
+    @POST("pessoa/salvar")
+    Call<List<Pessoa>> salvar(@Body List<Pessoa> pessoas);
 
 }
-

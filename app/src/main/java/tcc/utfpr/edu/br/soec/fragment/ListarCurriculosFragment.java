@@ -19,6 +19,7 @@ import tcc.utfpr.edu.br.soec.R;
 import tcc.utfpr.edu.br.soec.adapter.CurriculoAdapter;
 import tcc.utfpr.edu.br.soec.adapter.FormacaoAdapter;
 import tcc.utfpr.edu.br.soec.model.Candidato;
+import tcc.utfpr.edu.br.soec.model.ContaUsuario;
 import tcc.utfpr.edu.br.soec.model.Curriculo;
 import tcc.utfpr.edu.br.soec.model.Formacao;
 import tcc.utfpr.edu.br.soec.model.Pessoa;
@@ -70,11 +71,14 @@ public class ListarCurriculosFragment extends Fragment {
             public void onClick(View view) {
                 Curriculo curriculo = new Curriculo();
                 List<Pessoa> pessoas = dataBase.retrieve(Pessoa.class);
+                List<ContaUsuario> contasUsuarios = dataBase.retrieve(ContaUsuario.class);
 
                 Pessoa pessoa = pessoas.get(0);
+                ContaUsuario contaUsuario = contasUsuarios.get(0);
 
                 Candidato candidato = new Candidato();
                 candidato.setPessoa(pessoa);
+                candidato.setContaUsuario(contaUsuario);
 
                 curriculo.setCandidato(candidato);
 

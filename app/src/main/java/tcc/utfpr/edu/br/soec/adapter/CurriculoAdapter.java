@@ -95,9 +95,11 @@ public class CurriculoAdapter extends RecyclerView.Adapter {
 
                             try {
                                 Jpdroid dataBase = Jpdroid.getInstance();
+                                dataBase.open();
 
                                 Curriculo curriculo = curriculos.get(getAdapterPosition());
-                                dataBase.delete("curriculo", "_id = ? ", new String[]{curriculo.get_id().toString()});
+                                //dataBase.delete("curriculo", "_id = ? ", new String[]{curriculo.get_id().toString()});
+                                dataBase.delete(curriculo);
                                 curriculos.remove(getAdapterPosition());
                                 notifyDataSetChanged();
 

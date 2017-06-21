@@ -83,7 +83,10 @@ public class CadastrarCurriculoTabFotoFragment extends Fragment {
 
             if (curriculo.getCandidato() != null) {
                 caminhoFoto = curriculo.getCandidato().getPessoa().getFoto();
-                carregarFoto();
+                if(!"".equals(caminhoFoto) && !("null".equals(caminhoFoto)) && !(caminhoFoto != null)){
+                    carregarFoto();
+                }
+
             }
         }
 
@@ -203,27 +206,26 @@ public class CadastrarCurriculoTabFotoFragment extends Fragment {
     private void salvarFoto() throws JpdroidException {
         if (curriculo.get_id() == null) {
 
-//            List<Pessoa> pessoas = dataBase.retrieve(Pessoa.class);
-//
-//            Pessoa pessoa = pessoas.get(0);
-//            pessoa.setFoto(caminhoFoto);
-//
-//            Candidato candidato = new Candidato();
-//            candidato.setPessoa(pessoa);
-//
-//            curriculo.setCandidato(candidato);
+            Candidato candidato =  curriculo.getCandidato();
 
-            Pessoa pessoa = curriculo.getCandidato().getPessoa();
+            Pessoa pessoa = candidato.getPessoa();
             pessoa.setFoto(caminhoFoto);
 
             dataBase.persist(curriculo);
 
             if(curriculo.get_id() == null){
 
-                Cursor cursor = dataBase.rawQuery("SELECT MAX(_ID) as ID  FROM CURRICULO", null);
-                if(cursor.moveToFirst()){
-                    long id = cursor.getLong(cursor.getColumnIndex("ID"));
+                Cursor cursorCurriculo = dataBase.rawQuery("SELECT MAX(_ID) as ID  FROM CURRICULO", null);
+                Cursor cursorCandidato = dataBase.rawQuery("SELECT MAX(_ID) as ID  FROM CANDIDATO", null);
+
+                if(cursorCurriculo.moveToFirst()){
+                    long id = cursorCurriculo.getLong(cursorCurriculo.getColumnIndex("ID"));
                     curriculo.set_id(id);
+                }
+
+                if(cursorCandidato.moveToFirst()){
+                    long id = cursorCandidato.getLong(cursorCandidato.getColumnIndex("ID"));
+                    candidato.set_id(id);
                 }
             }
 
@@ -231,16 +233,8 @@ public class CadastrarCurriculoTabFotoFragment extends Fragment {
             return;
         }
 
-//        List<Curriculo> curriculos = dataBase.retrieve(Curriculo.class, "_id = " + curriculo.get_id(), true);
-//        curriculo = curriculos.get(0);
-
         Pessoa pessoa = curriculo.getCandidato().getPessoa();
         pessoa.setFoto(caminhoFoto);
-
-//        Candidato candidato = curriculo.getCandidato();
-//        candidato.setPessoa(pessoa);
-//
-//        curriculo.setCandidato(candidato);
 
         dataBase.persist(curriculo);
 

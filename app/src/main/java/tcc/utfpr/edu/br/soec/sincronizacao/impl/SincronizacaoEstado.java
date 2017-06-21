@@ -5,7 +5,6 @@ import android.content.Context;
 import android.util.Log;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import br.com.rafael.jpdroid.core.Jpdroid;
@@ -48,7 +47,6 @@ public class SincronizacaoEstado extends SincronizacaoAbstract<EstadoDTO> {
 
     @Override
     protected void salvarSincronizacao(Jpdroid dataBase, List<EstadoDTO> lista) throws Exception {
-
 
         if (lista == null) {
             throw new Exception("Lista de Estado Nula");

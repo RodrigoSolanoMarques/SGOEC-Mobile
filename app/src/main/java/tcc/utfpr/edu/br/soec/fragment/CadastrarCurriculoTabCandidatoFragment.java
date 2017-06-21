@@ -98,10 +98,17 @@ public class CadastrarCurriculoTabCandidatoFragment extends Fragment {
 
                     if (mCurriculo.get_id() == null) {
 
-                        Cursor cursor = mDataBase.rawQuery("SELECT MAX(_ID) as ID  FROM CURRICULO", null);
-                        if (cursor.moveToFirst()) {
-                            long id = cursor.getLong(cursor.getColumnIndex("ID"));
+                        Cursor cursorCurriculo = mDataBase.rawQuery("SELECT MAX(_ID) as ID  FROM CURRICULO", null);
+                        Cursor cursorCandidato = mDataBase.rawQuery("SELECT MAX(_ID) as ID  FROM CANDIDATO", null);
+
+                        if(cursorCurriculo.moveToFirst()){
+                            long id = cursorCurriculo.getLong(cursorCurriculo.getColumnIndex("ID"));
                             mCurriculo.set_id(id);
+                        }
+
+                        if(cursorCandidato.moveToFirst()){
+                            long id = cursorCandidato.getLong(cursorCandidato.getColumnIndex("ID"));
+                            candidato.set_id(id);
                         }
                     }
 

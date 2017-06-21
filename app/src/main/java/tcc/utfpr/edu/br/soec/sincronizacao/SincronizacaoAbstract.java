@@ -1,8 +1,6 @@
 package tcc.utfpr.edu.br.soec.sincronizacao;
 
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.widget.TextView;
 
 import java.util.List;
 
@@ -14,17 +12,16 @@ public abstract class SincronizacaoAbstract<T> {
 
     private RetrofitInicializador retrofitInicializador;
     private Jpdroid dataBase;
+    private Context context;
 
     protected abstract boolean isPost();
-
     protected abstract List<T> post(Jpdroid dataBase, RetrofitInicializador retrofitInicializador);
-
     protected abstract List<T> get(RetrofitInicializador retrofitInicializador);
-
     protected abstract void salvarSincronizacao(Jpdroid dataBase, List<T> lista) throws Exception;
 
     public SincronizacaoAbstract(Context context) {
         dataBase = Jpdroid.getInstance();
+        context= context;
         dataBase.setContext(context);
         this.retrofitInicializador = new RetrofitInicializador();
     }

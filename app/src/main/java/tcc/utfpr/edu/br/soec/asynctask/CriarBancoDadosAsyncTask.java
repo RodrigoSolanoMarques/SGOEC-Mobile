@@ -89,7 +89,7 @@ public class CriarBancoDadosAsyncTask extends AsyncTask<Void, String, Void> {
             publishProgress("Sincronizando");
 
             boolean isCargaInicial = false;
-            if(aClass == LoginActivity.class){
+            if(!Prefs.getBoolean(context, Prefs.DATABASE)){
                 isCargaInicial = true;
             }
 

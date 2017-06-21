@@ -1,10 +1,12 @@
 package tcc.utfpr.edu.br.soec.dto;
 
+import java.io.Serializable;
+
 /**
  * Created by rodri on 15/06/2017.
  */
 
-public class CargoDTO {
+public class CargoDTO implements Serializable{
     private Long id;
     private String nome;
     private String descricao;

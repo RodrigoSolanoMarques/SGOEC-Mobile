@@ -20,6 +20,7 @@ import br.com.rafael.jpdroid.core.Jpdroid;
 import br.com.rafael.jpdroid.exceptions.JpdroidException;
 import tcc.utfpr.edu.br.soec.R;
 import tcc.utfpr.edu.br.soec.adapter.ExperienciaProfissionalCheckBoxAdapter;
+import tcc.utfpr.edu.br.soec.model.Candidato;
 import tcc.utfpr.edu.br.soec.model.Curriculo;
 import tcc.utfpr.edu.br.soec.model.ExperienciaProfissional;
 import tcc.utfpr.edu.br.soec.utils.ToastUtils;
@@ -113,14 +114,23 @@ public class CadastrarCurriculoTabExperienciaProfissionalFragment extends Fragme
                     // Salvar as Experiencias Profissionais selecionadas no Banco
                     List<ExperienciaProfissional> experienciaProfissionalSelecionadas = mAdapter.getExperienciaProfissionalSelecionadas();
                     mCurriculo.setExperienciasProfissionais(experienciaProfissionalSelecionadas);
+
+                    Candidato candidato =  mCurriculo.getCandidato();
                     mDataBase.persist(mCurriculo);
 
                     if(mCurriculo.get_id() == null){
 
-                        Cursor cursor = mDataBase.rawQuery("SELECT MAX(_ID) as ID  FROM CURRICULO", null);
-                        if(cursor.moveToFirst()){
-                            long id = cursor.getLong(cursor.getColumnIndex("ID"));
+                        Cursor cursorCurriculo = mDataBase.rawQuery("SELECT MAX(_ID) as ID  FROM CURRICULO", null);
+                        Cursor cursorCandidato = mDataBase.rawQuery("SELECT MAX(_ID) as ID  FROM CANDIDATO", null);
+
+                        if(cursorCurriculo.moveToFirst()){
+                            long id = cursorCurriculo.getLong(cursorCurriculo.getColumnIndex("ID"));
                             mCurriculo.set_id(id);
+                        }
+
+                        if(cursorCandidato.moveToFirst()){
+                            long id = cursorCandidato.getLong(cursorCandidato.getColumnIndex("ID"));
+                            candidato.set_id(id);
                         }
                     }
 
