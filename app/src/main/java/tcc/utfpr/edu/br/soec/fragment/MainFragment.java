@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -179,7 +180,9 @@ public class MainFragment extends Fragment
 
     private Bitmap criarBitmapFoto() {
         Bitmap bitmap = BitmapFactory.decodeFile(caminhoFoto);
-        return Bitmap.createScaledBitmap(bitmap, 400, 400, true);
+        Matrix matrix = new Matrix();
+        matrix.setRotate(90);
+        return Bitmap.createBitmap(bitmap,0,0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
     }
 
 }

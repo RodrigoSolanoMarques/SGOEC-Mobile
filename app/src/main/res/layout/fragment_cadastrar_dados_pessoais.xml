@@ -225,7 +225,7 @@
                         style="@style/StyleEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/celular1"
+                        android:hint="@string/celular2"
                         android:maxLength="14" />
 
                 </android.support.design.widget.TextInputLayout>

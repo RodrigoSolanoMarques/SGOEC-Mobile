@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,18 +25,10 @@ import tcc.utfpr.edu.br.soec.adapter.OportunidadeEmpregoAdapter;
 import tcc.utfpr.edu.br.soec.dto.OportunidadeEmpregoDTO;
 import tcc.utfpr.edu.br.soec.interfaces.RecyclerViewOnClickListenerHack;
 import tcc.utfpr.edu.br.soec.model.AreaProfissional;
-import tcc.utfpr.edu.br.soec.model.AvaliacaoCurriculo;
 import tcc.utfpr.edu.br.soec.retrofit.RetrofitInicializador;
-import tcc.utfpr.edu.br.soec.retrofit.service.AreaProfissionalService;
 import tcc.utfpr.edu.br.soec.retrofit.service.OportunidadeEmpregoService;
-import tcc.utfpr.edu.br.soec.utils.ToastUtils;
 
 public class AreaProfissionalActivity extends AppCompatActivity implements RecyclerViewOnClickListenerHack {
-
-
-//    private List<AreaProfissionalDTO> mList;
-//    private List<AreaProfissionalDTO> mlistAux;
-//    private List<AreaProfissional> retorno = new ArrayList<>();
 
     // Banco de dados
     private Jpdroid jpdroid;
@@ -62,32 +53,6 @@ public class AreaProfissionalActivity extends AppCompatActivity implements Recyc
 
         constructorToolbar();
 
-//        if (savedInstanceState != null) {
-//            mList = (List<AreaProfissionalDTO>) savedInstanceState.getSerializable("mList");
-//            mlistAux = (List<AreaProfissionalDTO>) savedInstanceState.getSerializable("mListAux");
-//        } else {
-//            mList = new ArrayList<>();
-//
-//            AreaProfissionalService areaProfissionalService = new RetrofitInicializador().getOportunidadeEmpregoService();
-//            Call<List<AreaProfissionalDTO>> listar = areaProfissionalService.listar();
-//
-//            listar.enqueue(new Callback<List<AreaProfissionalDTO>>() {
-//                @Override
-//                public void onResponse(Call<List<AreaProfissionalDTO>> call, Response<List<AreaProfissionalDTO>> response) {
-//                    mList.addAll(response.body());
-//
-//                    AreaProfissionalAdapter areaProfissionalAdapter = new AreaProfissionalAdapter(getApplicationContext(), mList);
-//                    areaProfissionalAdapter.setRecyclerViewOnClickListenerHack(AreaProfissionalActivity.this);
-//                    mRecyclerView.setAdapter(areaProfissionalAdapter);
-//                }
-//
-//                @Override
-//                public void onFailure(Call<List<AreaProfissionalDTO>> call, Throwable t) {
-//                    ToastUtils.setMsgLong(getApplicationContext(), "Não foi possível carregar a lista");
-//                }
-//            });
-//        }
-
         // Recuperando Area Profissional do banco de dados
 
         List<AreaProfissional> areasProfissionais = jpdroid.retrieve(AreaProfissional.class);
@@ -100,7 +65,7 @@ public class AreaProfissionalActivity extends AppCompatActivity implements Recyc
         constructorRecycleView();
 
         mSpinnerFiltroAreaProfissional.setSelection(0);
-        enqueueAreaProfissionalServiceFindByNome(getOportunidadeEmpregoService());
+        enqueueOportunidadeEmpregoServiceFindByNome(getOportunidadeEmpregoService());
 
     }
 
@@ -168,7 +133,7 @@ public class AreaProfissionalActivity extends AppCompatActivity implements Recyc
         return retrofitInicializador.getOportunidadeEmpregoService();
     }
 
-    private void enqueueAreaProfissionalServiceFindByNome(OportunidadeEmpregoService oportunidadeEmpregoService) {
+    private void enqueueOportunidadeEmpregoServiceFindByNome(OportunidadeEmpregoService oportunidadeEmpregoService) {
 
         Call<List<OportunidadeEmpregoDTO>> callOportunidadeEmprego = oportunidadeEmpregoService.listarOportunidadeEmpregoByAreaProfissional((String) mSpinnerFiltroAreaProfissional.getSelectedItem());
 
@@ -181,7 +146,6 @@ public class AreaProfissionalActivity extends AppCompatActivity implements Recyc
                     OportunidadeEmpregoAdapter oportunidadeEmpregoAdapter = new OportunidadeEmpregoAdapter(getApplicationContext(), body);
                     oportunidadeEmpregoAdapter.setRecyclerViewOnClickListenerHack(AreaProfissionalActivity.this);
                     mRecyclerView.setAdapter(oportunidadeEmpregoAdapter);
-
                 }
             }
 
@@ -199,7 +163,7 @@ public class AreaProfissionalActivity extends AppCompatActivity implements Recyc
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                enqueueAreaProfissionalServiceFindByNome(getOportunidadeEmpregoService());
+                enqueueOportunidadeEmpregoServiceFindByNome(getOportunidadeEmpregoService());
             }
 
             @Override

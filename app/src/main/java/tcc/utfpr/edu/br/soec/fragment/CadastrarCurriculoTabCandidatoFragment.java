@@ -88,7 +88,6 @@ public class CadastrarCurriculoTabCandidatoFragment extends Fragment {
                         return;
                     }
 
-
                     // Salvar o candidato no Banco
                     Candidato candidato = mCurriculo.getCandidato();
                     candidato.setTitulacao(edTitulacao.getText().toString());
@@ -101,12 +100,12 @@ public class CadastrarCurriculoTabCandidatoFragment extends Fragment {
                         Cursor cursorCurriculo = mDataBase.rawQuery("SELECT MAX(_ID) as ID  FROM CURRICULO", null);
                         Cursor cursorCandidato = mDataBase.rawQuery("SELECT MAX(_ID) as ID  FROM CANDIDATO", null);
 
-                        if(cursorCurriculo.moveToFirst()){
+                        if (cursorCurriculo.moveToFirst()) {
                             long id = cursorCurriculo.getLong(cursorCurriculo.getColumnIndex("ID"));
                             mCurriculo.set_id(id);
                         }
 
-                        if(cursorCandidato.moveToFirst()){
+                        if (cursorCandidato.moveToFirst()) {
                             long id = cursorCandidato.getLong(cursorCandidato.getColumnIndex("ID"));
                             candidato.set_id(id);
                         }
@@ -136,11 +135,11 @@ public class CadastrarCurriculoTabCandidatoFragment extends Fragment {
 
         mCurriculo = (Curriculo) bundle.getSerializable("curriculo");
 
-        if (!TextUtils.isEmpty(mCurriculo.getCandidato().getTitulacao())) {
+        if (!TextUtils.isEmpty(mCurriculo.getCandidato().getTitulacao()) && !mCurriculo.getCandidato().getTitulacao().equals("null")) {
             edTitulacao.setText(mCurriculo.getCandidato().getTitulacao());
         }
 
-        if (!TextUtils.isEmpty(mCurriculo.getCandidato().getTitulacao())) {
+        if (!TextUtils.isEmpty(mCurriculo.getCandidato().getTitulacao()) && !mCurriculo.getCandidato().getTitulacao().equals("null")) {
             edArea_profissional.setText(mCurriculo.getCandidato().getAreaProfissional());
         }
     }

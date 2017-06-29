@@ -23,12 +23,14 @@ import tcc.utfpr.edu.br.soec.model.ContaUsuario;
 import tcc.utfpr.edu.br.soec.model.Curriculo;
 import tcc.utfpr.edu.br.soec.model.Formacao;
 import tcc.utfpr.edu.br.soec.model.Pessoa;
+import tcc.utfpr.edu.br.soec.utils.ToastUtils;
 
 
 public class ListarCurriculosFragment extends Fragment {
 
     private FragmentListener mFragmentListener;
     private Jpdroid dataBase;
+    private Context context;
 
     public interface FragmentListener {
         void cadastrarCurriculo(Curriculo curriculo);
@@ -37,6 +39,7 @@ public class ListarCurriculosFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        this.context = context;
 
         // Verefica se a activity/context que chamou o fragment implementa a interface
         try {
@@ -57,36 +60,52 @@ public class ListarCurriculosFragment extends Fragment {
         View layout = inflater.inflate(R.layout.fragment_listar_curriculos, container, false);
         RecyclerView lista = (RecyclerView) layout.findViewById(R.id.fragment_listar_curriculo_lista);
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         lista.setLayoutManager(layoutManager);
 
         List<Curriculo> listaCurriculo = dataBase.retrieve(Curriculo.class, true);
 
-        CurriculoAdapter adapter = new CurriculoAdapter(listaCurriculo, getActivity());
+        CurriculoAdapter adapter = new CurriculoAdapter(listaCurriculo, context);
         lista.setAdapter(adapter);
 
         FloatingActionButton fab = (FloatingActionButton) layout.findViewById(R.id.fragment_listar_curriculo_novo);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Curriculo curriculo = new Curriculo();
-                List<Pessoa> pessoas = dataBase.retrieve(Pessoa.class);
-                List<ContaUsuario> contasUsuarios = dataBase.retrieve(ContaUsuario.class);
 
-                Pessoa pessoa = pessoas.get(0);
-                ContaUsuario contaUsuario = contasUsuarios.get(0);
 
-                Candidato candidato = new Candidato();
-                candidato.setPessoa(pessoa);
-                candidato.setContaUsuario(contaUsuario);
+                if (quantidadeMaximaCurriculo()) {
+                    ToastUtils.setMsgLong(context, "Você já possui 3 Currículos");
+                } else {
 
-                curriculo.setCandidato(candidato);
+                    Curriculo curriculo = new Curriculo();
+                    List<Pessoa> pessoas = dataBase.retrieve(Pessoa.class);
+                    List<ContaUsuario> contasUsuarios = dataBase.retrieve(ContaUsuario.class);
 
-                mFragmentListener.cadastrarCurriculo(curriculo);
+                    Pessoa pessoa = pessoas.get(0);
+                    ContaUsuario contaUsuario = contasUsuarios.get(0);
+
+                    Candidato candidato = new Candidato();
+                    candidato.setPessoa(pessoa);
+                    candidato.setContaUsuario(contaUsuario);
+
+                    curriculo.setCandidato(candidato);
+
+                    mFragmentListener.cadastrarCurriculo(curriculo);
+                }
             }
         });
 
         return layout;
+    }
+
+    private Boolean quantidadeMaximaCurriculo() {
+        List<Curriculo> curriculos = dataBase.retrieve(Curriculo.class);
+        if (curriculos.size() == 3) {
+            return true;
+        }
+
+        return false;
     }
 
 }

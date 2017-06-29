@@ -3,6 +3,7 @@ package tcc.utfpr.edu.br.soec.dto;
 import java.io.Serializable;
 import java.util.Date;
 
+
 import tcc.utfpr.edu.br.soec.Enum.EStatusCurriculo;
 
 /**
@@ -19,4 +20,36 @@ public class AvaliacaoCurriculoDTO implements Serializable {
     private Date dataCurriculoEnviado;
     private Date dataEntrevista;
     private Date dataEncerramento;
+
+    public Long getId() {
+        return id;
+    }
+
+    public OportunidadeEmpregoDTO getOportunidadeEmprego() {
+        return oportunidadeEmprego;
+    }
+
+    public EStatusCurriculo getStatus() {
+        return status;
+    }
+
+    public Boolean getFavorito() {
+        return favorito;
+    }
+
+    public Boolean getAceitaEntrevista() {
+        return isAceitaEntrevista;
+    }
+
+    public Date getDataCurriculoEnviado() {
+        return dataCurriculoEnviado;
+    }
+
+    public Date getDataEntrevista() {
+        return dataEntrevista;
+    }
+
+    public Date getDataEncerramento() {
+        return dataEncerramento;
+    }
 }

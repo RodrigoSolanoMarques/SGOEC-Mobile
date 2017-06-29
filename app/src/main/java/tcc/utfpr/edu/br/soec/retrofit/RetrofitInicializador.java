@@ -3,6 +3,7 @@ package tcc.utfpr.edu.br.soec.retrofit;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -30,7 +31,7 @@ public class RetrofitInicializador {
     private final Retrofit retrofit;
 
     public RetrofitInicializador() {
-        Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
+        Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy'T'HH:mm:ss").create();
 
         OkHttpClient client = new OkHttpClient.Builder()
                 .connectTimeout(300, TimeUnit.SECONDS)

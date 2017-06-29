@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -58,7 +59,6 @@ public class CadastrarCurriculoTabFotoFragment extends Fragment {
         super.onAttach(context);
         try {
             mFragmentListener = (FragmentListener) context;
-
             this.context = context;
 
             dataBase = Jpdroid.getInstance();
@@ -83,10 +83,9 @@ public class CadastrarCurriculoTabFotoFragment extends Fragment {
 
             if (curriculo.getCandidato() != null) {
                 caminhoFoto = curriculo.getCandidato().getPessoa().getFoto();
-                if(!"".equals(caminhoFoto) && !("null".equals(caminhoFoto)) && !(caminhoFoto != null)){
+                if (!"".equals(caminhoFoto) && !("null".equals(caminhoFoto)) && (caminhoFoto != null)) {
                     carregarFoto();
                 }
-
             }
         }
 
@@ -94,13 +93,12 @@ public class CadastrarCurriculoTabFotoFragment extends Fragment {
         return layout;
     }
 
-    @Override
+        @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
         recuperarArgumentos(savedInstanceState);
     }
-
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == CADASTRAR_CURRICULO_TAB_CAMERA) {
@@ -124,7 +122,6 @@ public class CadastrarCurriculoTabFotoFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(final Bundle outState) {
-        super.onSaveInstanceState(outState);
 
         if (isCamera) {
             outState.putSerializable("caminhoFoto", caminhoFoto);
@@ -133,6 +130,7 @@ public class CadastrarCurriculoTabFotoFragment extends Fragment {
             outState.clear();
         }
 
+        //super.onSaveInstanceState(outState);
     }
 
     private void setOnClickInView() {
@@ -206,24 +204,24 @@ public class CadastrarCurriculoTabFotoFragment extends Fragment {
     private void salvarFoto() throws JpdroidException {
         if (curriculo.get_id() == null) {
 
-            Candidato candidato =  curriculo.getCandidato();
+            Candidato candidato = curriculo.getCandidato();
 
             Pessoa pessoa = candidato.getPessoa();
             pessoa.setFoto(caminhoFoto);
 
             dataBase.persist(curriculo);
 
-            if(curriculo.get_id() == null){
+            if (curriculo.get_id() == null) {
 
                 Cursor cursorCurriculo = dataBase.rawQuery("SELECT MAX(_ID) as ID  FROM CURRICULO", null);
                 Cursor cursorCandidato = dataBase.rawQuery("SELECT MAX(_ID) as ID  FROM CANDIDATO", null);
 
-                if(cursorCurriculo.moveToFirst()){
+                if (cursorCurriculo.moveToFirst()) {
                     long id = cursorCurriculo.getLong(cursorCurriculo.getColumnIndex("ID"));
                     curriculo.set_id(id);
                 }
 
-                if(cursorCandidato.moveToFirst()){
+                if (cursorCandidato.moveToFirst()) {
                     long id = cursorCandidato.getLong(cursorCandidato.getColumnIndex("ID"));
                     candidato.set_id(id);
                 }
@@ -252,7 +250,9 @@ public class CadastrarCurriculoTabFotoFragment extends Fragment {
 
     private Bitmap criarBitmapFoto() {
         Bitmap bitmap = BitmapFactory.decodeFile(caminhoFoto);
-        return Bitmap.createScaledBitmap(bitmap, 400, 400, true);
+        Matrix matrix = new Matrix();
+        matrix.setRotate(90);
+        return Bitmap.createBitmap(bitmap,0,0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
     }
 
 }

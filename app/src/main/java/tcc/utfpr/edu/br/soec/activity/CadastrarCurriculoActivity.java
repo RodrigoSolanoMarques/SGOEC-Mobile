@@ -92,7 +92,7 @@ public class CadastrarCurriculoActivity extends AppCompatActivity implements Cad
     }
 
     public void onSaveInstanceState(final Bundle outState) {
-        //super.onSaveInstanceState(outState);
+        super.onSaveInstanceState(outState);
         outState.putSerializable("curriculo", curriculo);
     }
 

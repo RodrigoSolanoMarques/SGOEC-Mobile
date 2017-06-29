@@ -30,7 +30,6 @@ public class AvaliacaoCurriculo  implements Serializable{
     @Column(nullable = true)
     private Boolean isAceitaEntrevista;
 
-    //@DateTimeFormat(pattern = "dd/MM/yyyy hh:mm:ss")
     @Column(nullable = false)
     private Date dataCurriculoEnviado;
 
