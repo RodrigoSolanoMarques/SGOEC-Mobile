@@ -16,8 +16,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -27,7 +29,10 @@ import java.util.List;
 import br.com.rafael.jpdroid.core.Jpdroid;
 import br.com.rafael.jpdroid.exceptions.JpdroidException;
 import tcc.utfpr.edu.br.soec.R;
+import tcc.utfpr.edu.br.soec.adapter.CidadeArrayAdapter;
+import tcc.utfpr.edu.br.soec.adapter.EstadoArrayAdapter;
 import tcc.utfpr.edu.br.soec.model.Cidade;
+import tcc.utfpr.edu.br.soec.model.Estado;
 import tcc.utfpr.edu.br.soec.model.Pessoa;
 import tcc.utfpr.edu.br.soec.utils.DatePickerFragment;
 import tcc.utfpr.edu.br.soec.utils.Prefs;
@@ -42,6 +47,7 @@ public class CadastrarDadosPessoaisFragment extends Fragment {
     private EditText edFragmentCadastrarDadosPessoaisDataNascimento;
     private EditText edFragmentCadastrarDadosPessoaisCpf;
     private Spinner spFragmentCadastrarDadosPessoaisCidade; // Cidades do banco de dados
+    private Spinner spFragmentCadastrarDadosPessoaisEstado; // Cidades do banco de dados
     private EditText edFragmentCadastrarDadosPessoaisRua;
     private EditText edFragmentCadastrarDadosPessoaisNumero;
     private EditText edFragmentCadastrarDadosPessoaisBairro;
@@ -55,6 +61,7 @@ public class CadastrarDadosPessoaisFragment extends Fragment {
     private FragmentListener fragmentListener;
 
     private Pessoa pessoa;
+    Jpdroid dataBase;
 
     @Override
     public void onAttach(Context context) {
@@ -90,6 +97,31 @@ public class CadastrarDadosPessoaisFragment extends Fragment {
 
         setHasOptionsMenu(true);
 
+        dataBase = Jpdroid.getInstance();
+        dataBase.setContext(getActivity());
+        dataBase.open();
+
+        List<Estado> estados = dataBase.retrieve(Estado.class);
+        EstadoArrayAdapter estadoArrayAdapter = new EstadoArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, estados);
+        spFragmentCadastrarDadosPessoaisEstado.setAdapter(estadoArrayAdapter);
+        spFragmentCadastrarDadosPessoaisEstado.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View view, int pos, long id) {
+                Estado estado = (Estado) parentView.getItemAtPosition(pos);
+
+                List<Cidade> cidades = dataBase.retrieve(Cidade.class, "idEstado = " + estado.get_id());
+
+                CidadeArrayAdapter cidadeArrayAdapter = new CidadeArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, cidades);
+                spFragmentCadastrarDadosPessoaisCidade.setAdapter(cidadeArrayAdapter);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
         edFragmentCadastrarDadosPessoaisDataNascimento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,6 +131,7 @@ public class CadastrarDadosPessoaisFragment extends Fragment {
         });
 
         pessoa = new Pessoa();
+
 
         return layout;
     }
@@ -113,6 +146,7 @@ public class CadastrarDadosPessoaisFragment extends Fragment {
         edFragmentCadastrarDadosPessoaisDataNascimento = (EditText) layout.findViewById(R.id.fragment_cadastrar_dados_pessoais_data_nascimento);
         edFragmentCadastrarDadosPessoaisCpf = (EditText) layout.findViewById(R.id.fragment_cadastrar_dados_pessoais_cpf);
         spFragmentCadastrarDadosPessoaisCidade = (Spinner) layout.findViewById(R.id.fragment_cadastrar_dados_pessoais_cidade);
+        spFragmentCadastrarDadosPessoaisEstado = (Spinner) layout.findViewById(R.id.fragment_cadastrar_dados_pessoais_estado);
         edFragmentCadastrarDadosPessoaisRua = (EditText) layout.findViewById(R.id.fragment_cadastrar_dados_pessoais_rua);
         edFragmentCadastrarDadosPessoaisNumero = (EditText) layout.findViewById(R.id.fragment_cadastrar_dados_pessoais_numero);
         edFragmentCadastrarDadosPessoaisBairro = (EditText) layout.findViewById(R.id.fragment_cadastrar_dados_pessoais_bairro);
@@ -165,7 +199,15 @@ public class CadastrarDadosPessoaisFragment extends Fragment {
         edFragmentCadastrarDadosPessoaisDataNascimento.setText(sdf.format(pessoa.getDataNascimento()));
 
         edFragmentCadastrarDadosPessoaisCpf.setText(pessoa.getCpf());
-        //spFragmentCadastrarDadosPessoaisCidade.setSe como setar o valor d cidade pelo obejto cidade
+
+        EstadoArrayAdapter adapterEstado = (EstadoArrayAdapter)spFragmentCadastrarDadosPessoaisEstado.getAdapter();
+        int positionEstado = adapterEstado.getPosition(pessoa.getCidade().getEstado());
+        spFragmentCadastrarDadosPessoaisEstado.setSelection(positionEstado);
+
+        CidadeArrayAdapter adapterCidade = (CidadeArrayAdapter)spFragmentCadastrarDadosPessoaisCidade.getAdapter();
+        int positionCidade = adapterCidade.getPosition(pessoa.getCidade());
+        spFragmentCadastrarDadosPessoaisCidade.setSelection(positionCidade);
+
         edFragmentCadastrarDadosPessoaisRua.setText(pessoa.getRua());
         edFragmentCadastrarDadosPessoaisNumero.setText(pessoa.getNumero());
         edFragmentCadastrarDadosPessoaisBairro.setText(pessoa.getBairro());
@@ -246,14 +288,13 @@ public class CadastrarDadosPessoaisFragment extends Fragment {
         try {
 
             if (validarCampos()) {
-                Jpdroid dataBase = Jpdroid.getInstance();
-                dataBase.setContext(getActivity());
-                dataBase.open();
+
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
                 pessoa.setNome(edFragmentCadastrarDadosPessoaisNome.getText().toString());
                 pessoa.setSobrenome(edFragmentCadastrarDadosPessoaisSobrenome.getText().toString());
-                pessoa.setDataNascimento(sdf.parse(edFragmentCadastrarDadosPessoaisDataNascimento.getText().toString()));
+                Date DataNascimento = sdf.parse(edFragmentCadastrarDadosPessoaisDataNascimento.getText().toString());
+                pessoa.setDataNascimento(DataNascimento);
                 pessoa.setCpf(edFragmentCadastrarDadosPessoaisCpf.getText().toString());
                 pessoa.setCidade((Cidade) spFragmentCadastrarDadosPessoaisCidade.getSelectedItem());
                 pessoa.setRua(edFragmentCadastrarDadosPessoaisRua.getText().toString());
@@ -284,7 +325,7 @@ public class CadastrarDadosPessoaisFragment extends Fragment {
 
                 // Verifica para sempre ter penas um cadastro de pessoa
                 List<Pessoa> pessoas = dataBase.retrieve(Pessoa.class, "_id = 1", true);
-                if(pessoas.size() > 0){
+                if (pessoas.size() > 0) {
                     pessoa.set_id(1L);
                 }
 

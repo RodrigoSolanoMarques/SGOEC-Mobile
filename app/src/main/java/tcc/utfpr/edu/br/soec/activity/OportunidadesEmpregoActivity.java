@@ -124,7 +124,7 @@ public class OportunidadesEmpregoActivity extends AppCompatActivity implements R
     }
 
     private OportunidadeEmpregoService getOportunidadeEmpregoService() {
-        RetrofitInicializador retrofitInicializador = new RetrofitInicializador();
+        RetrofitInicializador retrofitInicializador = new RetrofitInicializador(false);
         return retrofitInicializador.getOportunidadeEmpregoService();
     }
 }

@@ -1,8 +1,11 @@
 package tcc.utfpr.edu.br.soec.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import br.com.rafael.jpdroid.annotations.Column;

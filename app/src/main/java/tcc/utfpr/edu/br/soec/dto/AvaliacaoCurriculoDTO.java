@@ -20,6 +20,7 @@ public class AvaliacaoCurriculoDTO implements Serializable {
     private Date dataCurriculoEnviado;
     private Date dataEntrevista;
     private Date dataEncerramento;
+    private Long idCurriculo;
 
     public Long getId() {
         return id;
@@ -51,5 +52,9 @@ public class AvaliacaoCurriculoDTO implements Serializable {
 
     public Date getDataEncerramento() {
         return dataEncerramento;
+    }
+
+    public Long getIdCurriculo() {
+        return idCurriculo;
     }
 }

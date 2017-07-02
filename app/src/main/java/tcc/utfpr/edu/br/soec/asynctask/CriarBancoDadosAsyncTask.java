@@ -66,6 +66,7 @@ public class CriarBancoDadosAsyncTask extends AsyncTask<Void, String, Void> {
             if (!Prefs.getBoolean(context, Prefs.DATABASE)) {
                 publishProgress("Criando o Banco de Dados");
 
+
                 database.addEntity(ContaUsuario.class);
                 database.addEntity(Estado.class);
                 database.addEntity(Cidade.class);
@@ -81,23 +82,20 @@ public class CriarBancoDadosAsyncTask extends AsyncTask<Void, String, Void> {
                 database.addEntity(OportunidadeEmprego.class);
                 database.addEntity(AvaliacaoCurriculo.class);
 
-                Prefs.setBoolean(context, Prefs.DATABASE, true);
                 publishProgress("Banco de Dados Criado");
             }
             database.open();
-
-            publishProgress("Sincronizando");
-
-           boolean isCargaInicial = false;
-            if(!Prefs.getBoolean(context, Prefs.DATABASE)){
+            boolean isCargaInicial = false;
+            if (!Prefs.getBoolean(context, Prefs.DATABASE)) {
                 isCargaInicial = true;
             }
+            Prefs.setBoolean(context, Prefs.DATABASE, true);
 
+            publishProgress("Sincronizando");
             new ListaSincronizacao(isCargaInicial).sincronizarTudo(context);
 
         } catch (Exception e) {
             e.printStackTrace();
-            Prefs.setBoolean(context, Prefs.DATABASE, false);
         }
 
         return null;

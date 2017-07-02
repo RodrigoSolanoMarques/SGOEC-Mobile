@@ -1,6 +1,7 @@
 package tcc.utfpr.edu.br.soec.fragment;
 
 import android.app.DialogFragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
@@ -11,12 +12,14 @@ import android.widget.Button;
 import android.widget.RadioButton;
 
 import java.util.List;
+import java.util.Objects;
 
 import br.com.rafael.jpdroid.core.Jpdroid;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import tcc.utfpr.edu.br.soec.R;
+import tcc.utfpr.edu.br.soec.dto.AvaliacaoCurriculoDTO;
 import tcc.utfpr.edu.br.soec.model.AvaliacaoCurriculo;
 import tcc.utfpr.edu.br.soec.model.Curriculo;
 import tcc.utfpr.edu.br.soec.retrofit.RetrofitInicializador;
@@ -33,9 +36,25 @@ public class ListarCurriculoDialogFragment extends DialogFragment {
     private RadioButton rbCurriculo3;
     private Button btnEnviar;
     private Long idOportunidadeEmprego;
+    private FragmentListener listarCurriculoDialogFragmentInterface;
 
+    public interface FragmentListener{
+        void ListarCurriculoDialogFragmentOnclick();
+    }
 
-    public ListarCurriculoDialogFragment(Long idOportunidadeEmprego){
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        try {
+            listarCurriculoDialogFragmentInterface = (FragmentListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " deve implementar a interface FragmentListener da classe ListarCurriculoDialogFragment.");
+        }
+    }
+
+    public ListarCurriculoDialogFragment(Long idOportunidadeEmprego) {
         this.idOportunidadeEmprego = idOportunidadeEmprego;
     }
 
@@ -54,20 +73,11 @@ public class ListarCurriculoDialogFragment extends DialogFragment {
         final List<Curriculo> curriculos = dataBase.retrieve(Curriculo.class);
 
         if (curriculos.isEmpty()) {
-            ToastUtils.setMsgLong(getActivity(),"Não existe currículo(s) cadastrado");
+            ToastUtils.setMsgLong(getActivity(), "Não existe currículo(s) cadastrado");
             return null;
         }
 
-        switch (curriculos.size()){
-            case 1:
-                rbCurriculo2.setEnabled(false);
-                rbCurriculo3.setEnabled(false);
-                break;
-
-            case 2:
-                rbCurriculo3.setEnabled(false);
-                break;
-        }
+        disableRadioButtonCurriculo(curriculos);
 
         btnEnviar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,19 +86,20 @@ public class ListarCurriculoDialogFragment extends DialogFragment {
                 // Primeiro curriculo
                 int valor = 0;
 
-                if(rbCurriculo2.isChecked()){
+                if (rbCurriculo2.isChecked()) {
                     valor = 1;
-                }else if(rbCurriculo3.isChecked()){
+                } else if (rbCurriculo3.isChecked()) {
                     valor = 2;
                 }
 
-                RetrofitInicializador retrofitInicializador = new RetrofitInicializador();
+                RetrofitInicializador retrofitInicializador = new RetrofitInicializador(false);
                 Call<AvaliacaoCurriculo> callAvaliacao = retrofitInicializador.getAvaliacaoCurriculoService().salvar(curriculos.get(valor).getId(), idOportunidadeEmprego);
                 callAvaliacao.enqueue(new Callback<AvaliacaoCurriculo>() {
                     @Override
                     public void onResponse(Call<AvaliacaoCurriculo> call, Response<AvaliacaoCurriculo> response) {
                         ToastUtils.setMsgLong(getActivity(), "Currículo enviado");
                         dismiss();
+                        listarCurriculoDialogFragmentInterface.ListarCurriculoDialogFragmentOnclick();
                     }
 
                     @Override
@@ -101,5 +112,18 @@ public class ListarCurriculoDialogFragment extends DialogFragment {
         });
 
         return view;
+    }
+
+    private void disableRadioButtonCurriculo(List<Curriculo> curriculos) {
+        switch (curriculos.size()) {
+            case 1:
+                rbCurriculo2.setEnabled(false);
+                rbCurriculo3.setEnabled(false);
+                break;
+
+            case 2:
+                rbCurriculo3.setEnabled(false);
+                break;
+        }
     }
 }

@@ -23,7 +23,7 @@ public abstract class SincronizacaoAbstract<T> {
         dataBase = Jpdroid.getInstance();
         context= context;
         dataBase.setContext(context);
-        this.retrofitInicializador = new RetrofitInicializador();
+        this.retrofitInicializador = new RetrofitInicializador(false);
     }
 
     public void sincronizar() throws Exception {

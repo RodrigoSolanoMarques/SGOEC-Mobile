@@ -16,7 +16,7 @@ public class Prefs {
     /**
      * Web Service
      */
-    public static final String LINKWEBSERVICE = "http://192.168.1.5:8085/api/";
+    public static final String LINKWEBSERVICE = "http://192.168.1.41:8085/api/";
 
     /*
     * Boolean

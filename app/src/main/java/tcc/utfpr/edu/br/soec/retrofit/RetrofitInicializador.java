@@ -1,5 +1,7 @@
 package tcc.utfpr.edu.br.soec.retrofit;
 
+import android.support.annotation.Nullable;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -30,8 +32,14 @@ public class RetrofitInicializador {
 
     private final Retrofit retrofit;
 
-    public RetrofitInicializador() {
-        Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy'T'HH:mm:ss").create();
+    public RetrofitInicializador(@Nullable Boolean isDataHora) {
+
+        Gson gson;
+        if (isDataHora) {
+            gson = new GsonBuilder().setDateFormat("dd/MM/yyyy HH:mm").create();
+        } else {
+            gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
+        }
 
         OkHttpClient client = new OkHttpClient.Builder()
                 .connectTimeout(300, TimeUnit.SECONDS)

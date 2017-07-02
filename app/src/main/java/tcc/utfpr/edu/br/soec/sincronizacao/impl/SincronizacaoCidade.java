@@ -63,6 +63,8 @@ public class SincronizacaoCidade extends SincronizacaoAbstract<CidadeDTO> {
         for (CidadeDTO cidadeDTO : lista) {
             Cidade cidade = new Cidade().converterCidadeDTO(cidadeDTO);
             dataBase.persist(cidade);
+            int i = 0;
+            Log.i("INFO", ""+i++);
         }
     }
 }

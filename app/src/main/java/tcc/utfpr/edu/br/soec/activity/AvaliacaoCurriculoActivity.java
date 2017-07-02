@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.rafael.jpdroid.core.Jpdroid;
@@ -27,7 +29,7 @@ import tcc.utfpr.edu.br.soec.retrofit.RetrofitInicializador;
 import tcc.utfpr.edu.br.soec.retrofit.service.AvaliacaoCurriculoService;
 import tcc.utfpr.edu.br.soec.utils.ToastUtils;
 
-public class AvaliacaoCurriculoActivity extends FragmentActivity {
+public class AvaliacaoCurriculoActivity extends FragmentActivity implements ListarCurriculoDialogFragment.FragmentListener {
 
 
     private OportunidadeEmpregoDTO oportunidadeEmpregoDTO;
@@ -40,9 +42,11 @@ public class AvaliacaoCurriculoActivity extends FragmentActivity {
     private EditText mCidade;
     private EditText mSalario;
     private EditText mSituacao;
+    private EditText mDataEntrevista;
     private TextInputLayout mTextInputLayoutSalario;
     private TextInputLayout mTextInputLayoutSituacao;
     private Button btnEnviarCurriculo;
+    private AvaliacaoCurriculoDTO avaliacaoCurriculoDTO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,34 +77,37 @@ public class AvaliacaoCurriculoActivity extends FragmentActivity {
         }
 
 
-        retrofitInicializador = new RetrofitInicializador();
+        retrofitInicializador = new RetrofitInicializador(true);
         AvaliacaoCurriculoService avaliacaoCurriculoService = retrofitInicializador.getAvaliacaoCurriculoService();
 
         Call<AvaliacaoCurriculoDTO> callAvaliacaoCurriculo = avaliacaoCurriculoService.findByPessoa(idPessoa, oportunidadeEmpregoDTO.getId());
+
         callAvaliacaoCurriculo.enqueue(new Callback<AvaliacaoCurriculoDTO>() {
             @Override
             public void onResponse(Call<AvaliacaoCurriculoDTO> call, Response<AvaliacaoCurriculoDTO> response) {
-                AvaliacaoCurriculoDTO body = response.body();
+                avaliacaoCurriculoDTO = response.body();
 
-                if (body.getStatus() == null) {
-                    btnEnviarCurriculo.setVisibility(View.VISIBLE);
-                } else {
+                if(avaliacaoCurriculoDTO != null){
                     mSituacao.setVisibility(View.VISIBLE);
-                    mSituacao.setText(body.getStatus().toString());
+                    mSituacao.setText(avaliacaoCurriculoDTO.getStatus().toString());
                     btnEnviarCurriculo.setVisibility(View.GONE);
+                }
 
+                if(EStatusCurriculo.ENTREVISTA_MARCADA == avaliacaoCurriculoDTO.getStatus()){
+                    mDataEntrevista.setVisibility(View.VISIBLE);
+
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                    mDataEntrevista.setText(sdf.format(avaliacaoCurriculoDTO.getDataEntrevista()));
                 }
             }
 
             @Override
             public void onFailure(Call<AvaliacaoCurriculoDTO> call, Throwable t) {
-                btnEnviarCurriculo.setVisibility(View.VISIBLE);
-                mSituacao.setVisibility(View.GONE);
+                if(avaliacaoCurriculoDTO != null){
 
-
+                }
             }
         });
-
     }
 
     private void getViews() {
@@ -110,6 +117,7 @@ public class AvaliacaoCurriculoActivity extends FragmentActivity {
         mCidade = (EditText) findViewById(R.id.activity_avaliacao_curriculo_cidade);
         mSalario = (EditText) findViewById(R.id.activity_avaliacao_curriculo_salario);
         mSituacao = (EditText) findViewById(R.id.activity_avaliacao_curriculo_situacao);
+        mDataEntrevista = (EditText) findViewById(R.id.activity_avaliacao_curriculo_data_entrevista);
         mTextInputLayoutSalario = (TextInputLayout) findViewById(R.id.textInputLayout5);
         mTextInputLayoutSituacao = (TextInputLayout) findViewById(R.id.textInputLayout6);
         btnEnviarCurriculo = (Button) findViewById(R.id.btnEnviarCurriculo);
@@ -136,5 +144,10 @@ public class AvaliacaoCurriculoActivity extends FragmentActivity {
             return null;
 
         }
+    }
+
+    @Override
+    public void ListarCurriculoDialogFragmentOnclick() {
+        finish();
     }
 }

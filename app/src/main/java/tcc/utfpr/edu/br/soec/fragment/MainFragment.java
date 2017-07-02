@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -14,6 +13,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,6 +23,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.ByteArrayOutputStream;
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -34,6 +36,7 @@ import tcc.utfpr.edu.br.soec.activity.AreaProfissionalActivity;
 import tcc.utfpr.edu.br.soec.activity.ExperienciasProfissionaisActivity;
 import tcc.utfpr.edu.br.soec.activity.FormacoesActivity;
 import tcc.utfpr.edu.br.soec.activity.OportunidadesEmpregoActivity;
+import tcc.utfpr.edu.br.soec.asynctask.SincronizacaoAsyncTask;
 import tcc.utfpr.edu.br.soec.model.ContaUsuario;
 import tcc.utfpr.edu.br.soec.model.Pessoa;
 
@@ -55,7 +58,7 @@ public class MainFragment extends Fragment
     private TextView nav_header_main_email;
     private TextView nav_header_main_data_nascimento;
     private ImageView nav_header_main_foto;
-    private String caminhoFoto;
+    private String bitmapFoto;
 
     @Nullable
     @Override
@@ -95,9 +98,9 @@ public class MainFragment extends Fragment
         nav_header_main_data_nascimento = (TextView) header.findViewById(R.id.nav_header_main_data_nascimento);
         nav_header_main_foto = (ImageView) header.findViewById(R.id.nav_header_main_foto);
 
-        caminhoFoto = pessoas.get(0).getFoto();
+        bitmapFoto = pessoas.get(0).getFoto();
 
-        if(!caminhoFoto.equals("null") && caminhoFoto != null){
+        if (bitmapFoto != null && !bitmapFoto.equals("null")) {
             carregarFoto();
         }
 
@@ -126,6 +129,13 @@ public class MainFragment extends Fragment
         int id = item.getItemId();
 
         if (id == R.id.action_atualizar) {
+
+            try {
+                new SincronizacaoAsyncTask(getContext()).execute();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -171,18 +181,22 @@ public class MainFragment extends Fragment
 
     private void carregarFoto() {
 
-        Bitmap bitmapReduzido = criarBitmapFoto();
+//        Bitmap bitmapReduzido = criarBitmapFoto();
 
-        nav_header_main_foto.setImageBitmap(bitmapReduzido);
-        nav_header_main_foto.setScaleType(ImageView.ScaleType.FIT_XY);
-
+        try {
+            Bitmap bitmapReduzido = convertByteArrayToBitmap(bitmapFoto);
+            nav_header_main_foto.setImageBitmap(bitmapReduzido);
+            nav_header_main_foto.setScaleType(ImageView.ScaleType.FIT_XY);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 
-    private Bitmap criarBitmapFoto() {
-        Bitmap bitmap = BitmapFactory.decodeFile(caminhoFoto);
-        Matrix matrix = new Matrix();
-        matrix.setRotate(90);
-        return Bitmap.createBitmap(bitmap,0,0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-    }
+    private Bitmap convertByteArrayToBitmap(String imagem) throws UnsupportedEncodingException {
 
+        byte[] bytarray = Base64.decode(imagem,0);
+        return BitmapFactory.decodeByteArray(bytarray, 0,
+                bytarray.length);
+
+    }
 }

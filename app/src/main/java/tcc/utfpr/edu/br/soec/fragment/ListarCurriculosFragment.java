@@ -86,10 +86,9 @@ public class ListarCurriculosFragment extends Fragment {
                     ContaUsuario contaUsuario = contasUsuarios.get(0);
 
                     Candidato candidato = new Candidato();
+                    curriculo.setCandidato(candidato);
                     candidato.setPessoa(pessoa);
                     candidato.setContaUsuario(contaUsuario);
-
-                    curriculo.setCandidato(candidato);
 
                     mFragmentListener.cadastrarCurriculo(curriculo);
                 }
@@ -101,7 +100,7 @@ public class ListarCurriculosFragment extends Fragment {
 
     private Boolean quantidadeMaximaCurriculo() {
         List<Curriculo> curriculos = dataBase.retrieve(Curriculo.class);
-        if (curriculos.size() == 3) {
+        if (curriculos.size() >= 3) {
             return true;
         }
 

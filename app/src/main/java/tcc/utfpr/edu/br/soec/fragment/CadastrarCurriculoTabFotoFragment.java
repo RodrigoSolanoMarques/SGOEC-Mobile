@@ -8,19 +8,23 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import br.com.rafael.jpdroid.core.Jpdroid;
@@ -30,6 +34,8 @@ import tcc.utfpr.edu.br.soec.model.Candidato;
 import tcc.utfpr.edu.br.soec.model.Curriculo;
 import tcc.utfpr.edu.br.soec.model.Pessoa;
 import tcc.utfpr.edu.br.soec.utils.ToastUtils;
+
+import static android.R.attr.value;
 
 public class CadastrarCurriculoTabFotoFragment extends Fragment {
 
@@ -41,8 +47,9 @@ public class CadastrarCurriculoTabFotoFragment extends Fragment {
     private Button btnGaleria;
     private Button btnSalvar;
     private String caminhoFoto;
-    private Boolean isCamera = false;
-    private Boolean isGaleria = false;
+    private byte[] bitmapFoto;
+    private Boolean isCamera;
+    private Boolean isGaleria;
 
 
     private Jpdroid dataBase;
@@ -74,30 +81,39 @@ public class CadastrarCurriculoTabFotoFragment extends Fragment {
                              Bundle savedInstanceState) {
         View layout = getViews(inflater, container);
 
-        if (isCamera) {
-            recuperarArgumentos(savedInstanceState);
-        } else if (isGaleria) {
-            savedInstanceState.clear();
-        } else {
-            recuperarArgumentos(getArguments());
-
-            if (curriculo.getCandidato() != null) {
-                caminhoFoto = curriculo.getCandidato().getPessoa().getFoto();
-                if (!"".equals(caminhoFoto) && !("null".equals(caminhoFoto)) && (caminhoFoto != null)) {
-                    carregarFoto();
-                }
-            }
-        }
+//        if (isCamera != null && isCamera == true) {
+//            recuperarArgumentos(savedInstanceState);
+//        } else if (isGaleria != null && isGaleria) {
+//            savedInstanceState.clear();
+//        } else {
+//            recuperarArgumentos(getArguments());
+//
+//            if (curriculo.getCandidato() != null) {
+//                caminhoFoto = curriculo.getCandidato().getPessoa().getFoto();
+//                if (!"".equals(caminhoFoto) && !("null".equals(caminhoFoto)) && (caminhoFoto != null)) {
+//                    //carregarFoto();
+//                    //Bitmap bitmap = ((BitmapDrawable)ivFoto.getDrawable()).getBitmap();
+//                    Bitmap bitmap = convertByteArrayToBitmap(caminhoFoto);
+//                    ivFoto.setImageBitmap(bitmap);
+//                }
+//            }
+//        }
 
         setOnClickInView();
         return layout;
     }
 
-        @Override
+    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        recuperarArgumentos(savedInstanceState);
+        if (savedInstanceState != null) {
+            recuperarArgumentos(savedInstanceState);
+        } else {
+            recuperarArgumentos(getArguments());
+        }
+
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
@@ -105,7 +121,7 @@ public class CadastrarCurriculoTabFotoFragment extends Fragment {
                 carregarFoto();
             } else {
                 Uri selectedImage = data.getData();
-                caminhoFoto = getImagePath(selectedImage);
+                //caminhoFoto = getImagePath(selectedImage);
                 ivFoto.setImageURI(selectedImage);
             }
         }
@@ -127,10 +143,11 @@ public class CadastrarCurriculoTabFotoFragment extends Fragment {
             outState.putSerializable("caminhoFoto", caminhoFoto);
             outState.putSerializable("curriculo", curriculo);
         } else {
-            outState.clear();
+            //outState.clear();
+            outState.putSerializable("curriculo", curriculo);
         }
 
-        //super.onSaveInstanceState(outState);
+        super.onSaveInstanceState(outState);
     }
 
     private void setOnClickInView() {
@@ -196,9 +213,9 @@ public class CadastrarCurriculoTabFotoFragment extends Fragment {
             curriculo = (Curriculo) bundle.getSerializable("curriculo");
         }
 
-        if (bundle.containsKey("caminhoFoto")) {
-            caminhoFoto = bundle.getString("caminhoFoto");
-        }
+//        if (bundle.containsKey("caminhoFoto")) {
+//            caminhoFoto = bundle.getString("caminhoFoto");
+//        }
     }
 
     private void salvarFoto() throws JpdroidException {
@@ -207,7 +224,11 @@ public class CadastrarCurriculoTabFotoFragment extends Fragment {
             Candidato candidato = curriculo.getCandidato();
 
             Pessoa pessoa = candidato.getPessoa();
-            pessoa.setFoto(caminhoFoto);
+            //pessoa.setFoto(caminhoFoto);
+
+            Bitmap bitmap = ((BitmapDrawable) ivFoto.getDrawable()).getBitmap();
+            byte[] foto = convertBitmapToArrayByte(bitmap);
+            pessoa.setFoto(Base64.encodeToString(foto, 0));
 
             dataBase.persist(curriculo);
 
@@ -232,27 +253,45 @@ public class CadastrarCurriculoTabFotoFragment extends Fragment {
         }
 
         Pessoa pessoa = curriculo.getCandidato().getPessoa();
-        pessoa.setFoto(caminhoFoto);
+        //pessoa.setFoto(caminhoFoto);
+
+        Bitmap bitmap = ((BitmapDrawable) ivFoto.getDrawable()).getBitmap();
+        byte[] foto = convertBitmapToArrayByte(bitmap);
+        pessoa.setFoto(Base64.encodeToString(foto, 0));
 
         dataBase.persist(curriculo);
 
         mFragmentListener.onClickCadastrarCurriculoTabFotoFragment();
     }
 
+    // Usado para camera
     private void carregarFoto() {
 
         Bitmap bitmapReduzido = criarBitmapFoto();
-
         ivFoto.setImageBitmap(bitmapReduzido);
         ivFoto.setScaleType(ImageView.ScaleType.FIT_XY);
 
     }
 
+    // Usado para Camera
     private Bitmap criarBitmapFoto() {
         Bitmap bitmap = BitmapFactory.decodeFile(caminhoFoto);
         Matrix matrix = new Matrix();
-        matrix.setRotate(90);
-        return Bitmap.createBitmap(bitmap,0,0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+        matrix.setRotate(0);
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+    }
+
+    private Bitmap convertByteArrayToBitmap(String imagem) throws UnsupportedEncodingException {
+
+        byte[] bytarray = Base64.decode(imagem,0);
+        return BitmapFactory.decodeByteArray(bytarray, 0,
+                bytarray.length);
+    }
+
+    private byte[] convertBitmapToArrayByte(Bitmap bitmap) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 0, baos);
+        return baos.toByteArray();
     }
 
 }

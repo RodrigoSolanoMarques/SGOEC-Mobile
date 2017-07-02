@@ -57,7 +57,7 @@ public class CadastrarExperienciaProfissionalFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        getActivity().setTitle("Curso Complementar");
+        getActivity().setTitle("Experiência Profissional");
 
         layout = inflater.inflate(R.layout.fragment_cadastrar_experiencia_profissional, container, false);
 

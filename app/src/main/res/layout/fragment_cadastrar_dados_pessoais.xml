@@ -85,8 +85,14 @@
 
 
             <Spinner
+                android:id="@+id/fragment_cadastrar_dados_pessoais_estado"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+           />
+
+            <Spinner
                 android:id="@+id/fragment_cadastrar_dados_pessoais_cidade"
-                style="@style/StyleEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/cidade" />

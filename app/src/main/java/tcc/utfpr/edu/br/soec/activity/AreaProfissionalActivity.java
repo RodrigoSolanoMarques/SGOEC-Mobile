@@ -129,7 +129,7 @@ public class AreaProfissionalActivity extends AppCompatActivity implements Recyc
     }
 
     private OportunidadeEmpregoService getOportunidadeEmpregoService() {
-        RetrofitInicializador retrofitInicializador = new RetrofitInicializador();
+        RetrofitInicializador retrofitInicializador = new RetrofitInicializador(false);
         return retrofitInicializador.getOportunidadeEmpregoService();
     }
 
